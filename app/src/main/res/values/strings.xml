@@ -9,4 +9,17 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_user">¿Cuál será tu nombre de usuario?</string>
+    <string name="tv_nombre">¿Cuál es tu nombre completo? (Nombre y apellidos)</string>
+    <string name="tv_email">Inserta un correo electrónico</string>
+    <string name="tv_password">Inserta una contraseña</string>
+    <string name="tv_repetir">Repetir contraseña</string>
+    <string name="et_escribir">Escribe aquí</string>
+    <string name="bt_volver">Volver</string>
+    <string name="bt_registro">Registrarse</string>
+    <string name="bt_login">Iniciar sesión</string>
+    <string name="tv_login">Correo electrónico</string>
+    <string name="tv_pwd">Contraseña</string>
 </resources>
