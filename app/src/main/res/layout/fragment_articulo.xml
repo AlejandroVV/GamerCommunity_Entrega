@@ -5,4 +5,82 @@
     android:id="@+id/articuloLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArticuloFragment"/>
+    tools:context=".ArticuloFragment">
+
+    <ImageButton
+        android:id="@+id/btChatArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@android:drawable/ic_dialog_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPerfilArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/btChatArticulo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btChatArticulo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/etTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:text="Título" />
+
+            <EditText
+                android:id="@+id/etAutor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textAlignment="center"
+                tools:text="Escrito por" />
+
+            <EditText
+                android:id="@+id/etArticulo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:text="@string/lorem" />
+
+            <RatingBar
+                android:id="@+id/rbValoracion"
+                style="@style/Widget.AppCompat.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:rating="0" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
