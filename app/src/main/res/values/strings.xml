@@ -12,7 +12,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_user">¿Cuál será tu nombre de usuario?</string>
-    <string name="tv_nombre">¿Cuál es tu nombre completo? (Nombre y apellidos)</string>
+    <string name="tv_nombre">¿Cuál es tu nombre completo?</string>
     <string name="tv_email">Inserta un correo electrónico</string>
     <string name="tv_password">Inserta una contraseña</string>
     <string name="tv_repetir">Repetir contraseña</string>
