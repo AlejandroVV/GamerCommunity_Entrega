@@ -1,4 +1,4 @@
-package com.severo.gamercommunity
+package com.severo.gamercommunity.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.severo.gamercommunity.R
 import com.severo.gamercommunity.databinding.FragmentLoginBinding
 
 /**
@@ -35,6 +36,13 @@ class LoginFragment : Fragment() {
         /*binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }*/
+        binding.btRegistroLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+        binding.btLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_LoginFragment_to_listaFragment)
+        }
     }
 
     override fun onDestroyView() {

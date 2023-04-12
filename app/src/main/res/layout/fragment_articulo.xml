@@ -5,7 +5,7 @@
     android:id="@+id/articuloLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArticuloFragment">
+    tools:context=".ui.ArticuloFragment">
 
     <ImageButton
         android:id="@+id/btChatArticulo"

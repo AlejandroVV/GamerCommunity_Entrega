@@ -1,4 +1,4 @@
-package com.severo.gamercommunity
+package com.severo.gamercommunity.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.severo.gamercommunity.R
 import com.severo.gamercommunity.databinding.FragmentRegistroBinding
 
 /**
@@ -35,6 +36,9 @@ class RegistroFragment : Fragment() {
         /*binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }*/
+        binding.btVolver.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
     }
 
     override fun onDestroyView() {

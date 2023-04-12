@@ -4,36 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     android:label="@string/la_titulo"
-    app:startDestination="@id/listaFragment">
+    app:startDestination="@id/LoginFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.severo.gamercommunity.LoginFragment"
+        android:id="@+id/LoginFragment"
+        android:name="com.severo.gamercommunity.ui.LoginFragment"
         android:label="@string/la_titulo"
         tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/RegistroFragment" />
+        <action
+            android:id="@+id/action_LoginFragment_to_listaFragment"
+            app:destination="@id/listaFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.severo.gamercommunity.RegistroFragment"
+        android:id="@+id/RegistroFragment"
+        android:name="com.severo.gamercommunity.ui.RegistroFragment"
         android:label="@string/la_titulo"
         tools:layout="@layout/fragment_registro">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/LoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/listaFragment"
-        android:name="com.severo.gamercommunity.ListaFragment"
+        android:name="com.severo.gamercommunity.ui.ListaFragment"
         android:label="@string/la_titulo"
-        tools:layout="@layout/fragment_lista" />
+        tools:layout="@layout/fragment_lista" >
+        <action
+            android:id="@+id/action_listaFragment_to_articuloFragment"
+            app:destination="@id/articuloFragment" />
+    </fragment>
     <fragment
         android:id="@+id/articuloFragment"
-        android:name="com.severo.gamercommunity.ArticuloFragment"
+        android:name="com.severo.gamercommunity.ui.ArticuloFragment"
         android:label="@string/la_titulo"
-        tools:layout="@layout/fragment_articulo" />
+        tools:layout="@layout/fragment_articulo" >
+        <action
+            android:id="@+id/action_articuloFragment_to_listaFragment"
+            app:destination="@id/listaFragment" />
+        <argument
+            android:name="articulo"
+            app:argType="com.severo.gamercommunity.model.Articulo"
+            app:nullable="true" />
+    </fragment>
 </navigation>
