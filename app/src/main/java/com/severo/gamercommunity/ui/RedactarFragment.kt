@@ -10,13 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.severo.gamercommunity.R
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
+import com.severo.gamercommunity.databinding.FragmentRedactarBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
-class ArticuloFragment : Fragment() {
-    private var _binding: FragmentArticuloBinding? = null
-    private val args: ArticuloFragmentArgs by navArgs()
+
+class RedactarFragment : Fragment() {
+
+    private var _binding: FragmentRedactarBinding? = null
+    private val args: RedactarFragmentArgs by navArgs()
     private val viewModel: AppViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
@@ -28,16 +32,15 @@ class ArticuloFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentArticuloBinding.inflate(inflater, container, false)
+        _binding = FragmentRedactarBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iniciaArticulo(args.articulo!!)
-        // << TEMPORAL >>
-        binding.btGuardarArticulo.setOnClickListener {
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Nuevo artículo"
+        binding.btGuardarRedactar.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
     }
@@ -47,24 +50,14 @@ class ArticuloFragment : Fragment() {
         _binding = null
     }
 
-    private fun iniciaArticulo(articulo: Articulo) {
-        binding.etTitulo.setText(articulo.titulo)
-        binding.etAutor.setText("${articulo.usuario}")
-        binding.etArticulo.setText(articulo.contenido)
-        binding.rbValoracion.rating = articulo.valoracion
-//cambiamos el título
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Artículo ${articulo.id}"
-    }
-
     private fun guardarArticulo(articulo: Articulo) {
 //recuperamos los datos
         var id = articulo.id
-        val titulo = binding.etTitulo.text.toString()
-        val descripcion = articulo.descripcion
-        val contenido = binding.etArticulo.text.toString()
-        val valoracion=binding.rbValoracion.rating
-        val usuario=binding.etAutor.text.toString()
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
+        val titulo = binding.etTituloRedactar.text.toString()
+        val descripcion = binding.etDescripcion.text.toString()
+        val contenido = binding.etContenidoRedactar.text.toString()
+        val usuario= "Usuario"
+        val articulo = Articulo(id, titulo, descripcion, contenido, 0F, usuario)
 
 //guardamos la tarea desde el viewmodel
         viewModel.addArticulo(articulo)

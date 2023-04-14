@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/articuloLayout"
+    android:id="@+id/redactarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ArticuloFragment">
+    tools:context=".ui.RedactarFragment" >
 
     <ImageButton
-        android:id="@+id/btChatArticulo"
+        android:id="@+id/btChatRedactar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -18,86 +18,85 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvPerfilArticulo"
+        android:id="@+id/tvPerfilRedactar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/btChatArticulo"
+        app:layout_constraintEnd_toStartOf="@+id/btChatRedactar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btChatArticulo">
+        app:layout_constraintTop_toBottomOf="@+id/btChatRedactar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_titulo" />
+
             <EditText
-                android:id="@+id/etTitulo"
+                android:id="@+id/etTituloRedactar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                tools:text="Título" />
-
-            <EditText
-                android:id="@+id/etAutor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                tools:text="Escrito por" />
-
-            <EditText
-                android:id="@+id/etArticulo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:text="@string/lorem" />
+                android:hint="@string/et_escribir"
+                android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/tvValoracion"
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/tv_descripcion" />
 
-            <RatingBar
-                android:id="@+id/rbValoracion"
-                style="@style/Widget.AppCompat.RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:rating="0" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvComentarios"
+            <EditText
+                android:id="@+id/etDescripcion"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/et_escribir"
+                android:inputType="textMultiLine"
+                android:maxLines="3" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_contenido" />
+
+            <EditText
+                android:id="@+id/etContenidoRedactar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="@string/et_escribir"
+                android:inputType="textMultiLine" />
+
         </LinearLayout>
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/btGuardarArticulo"
+        android:id="@+id/btGuardarRedactar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_save"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toStartOf="@+id/tvPerfilArticulo"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintEnd_toStartOf="@+id/tvPerfilRedactar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

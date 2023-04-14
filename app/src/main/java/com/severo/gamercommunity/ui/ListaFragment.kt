@@ -62,7 +62,7 @@ class ListaFragment : Fragment() {
     private fun iniciaCRUD(){
         binding.btNuevo.setOnClickListener {
             val articulo = Articulo("","","", 0F, "")
-            val action = ListaFragmentDirections.actionListaFragmentToArticuloFragment(articulo)
+            val action = ListaFragmentDirections.actionListaFragmentToRedactarFragment(articulo)
             findNavController().navigate(action)
         }
         articulosAdapter.onArticuloClickListener = object :
