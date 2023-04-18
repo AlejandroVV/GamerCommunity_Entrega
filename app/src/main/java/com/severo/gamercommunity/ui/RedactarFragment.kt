@@ -39,7 +39,7 @@ class RedactarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Nuevo artículo"
+        iniciaArticulo(args.articulo!!)
         binding.btGuardarRedactar.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
@@ -56,8 +56,9 @@ class RedactarFragment : Fragment() {
         val titulo = binding.etTituloRedactar.text.toString()
         val descripcion = binding.etDescripcion.text.toString()
         val contenido = binding.etContenidoRedactar.text.toString()
-        val usuario= "Usuario"
-        val articulo = Articulo(id, titulo, descripcion, contenido, 0F, usuario)
+        val usuario= articulo.usuario
+        val valoracion = articulo.valoracion
+        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
 
 //guardamos la tarea desde el viewmodel
         viewModel.addArticulo(articulo)
@@ -77,5 +78,12 @@ class RedactarFragment : Fragment() {
     private fun muestraMensajeError() {
         Snackbar.make(binding.root, "Es necesario rellenar todos los campos", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
+    }
+
+    private fun iniciaArticulo(articulo: Articulo) {
+        binding.etTituloRedactar.setText(articulo.titulo)
+        binding.etDescripcion.setText(articulo.descripcion)
+        binding.etContenidoRedactar.setText(articulo.contenido)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Artículo ${articulo.id}"
     }
 }

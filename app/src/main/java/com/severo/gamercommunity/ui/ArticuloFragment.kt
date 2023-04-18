@@ -36,10 +36,10 @@ class ArticuloFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iniciaArticulo(args.articulo!!)
-        // << TEMPORAL >>
         binding.btGuardarArticulo.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
+        soloLectura()
     }
 
     override fun onDestroyView() {
@@ -84,5 +84,11 @@ class ArticuloFragment : Fragment() {
     private fun muestraMensajeError() {
         Snackbar.make(binding.root, "Es necesario rellenar todos los campos", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()
+    }
+
+    private fun soloLectura(){
+        binding.etTitulo.isFocusable = false
+        binding.etArticulo.isFocusable = false
+        binding.etAutor.isFocusable = false
     }
 }

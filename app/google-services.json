@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "601696638321",
+    "project_id": "gamercommunity-90968",
+    "storage_bucket": "gamercommunity-90968.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601696638321:android:84cc348d1a392c786c52d0",
+        "android_client_info": {
+          "package_name": "com.severo.gamercommunity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601696638321-bal38fhdiasdb3e47he44kd3rbe1fs69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLFoiUlO3IAdRZ1A2fYEfcuF6aMjY_eUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601696638321-bal38fhdiasdb3e47he44kd3rbe1fs69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

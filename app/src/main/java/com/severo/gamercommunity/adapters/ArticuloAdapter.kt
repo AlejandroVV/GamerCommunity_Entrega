@@ -29,6 +29,11 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
                 val tarea=listaArticulos?.get(this.adapterPosition)
                 onArticuloClickListener?.onTareaClick(tarea)
             }
+
+            binding.btEditar.setOnClickListener(){
+                val tarea=listaArticulos?.get(this.adapterPosition)
+                onArticuloClickListener?.onArticuloEditar(tarea)
+            }
         }
     }
 
@@ -67,5 +72,6 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
         fun onTareaClick(articulo: Articulo?)
         //borrar tarea que contiene el ViewHolder
         fun onTareaBorrarClick(articulo: Articulo?)
+        fun onArticuloEditar(articulo: Articulo?)
     }
 }

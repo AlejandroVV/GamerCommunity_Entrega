@@ -78,6 +78,11 @@ class ListaFragment : Fragment() {
 //borramos directamente la tarea
                 viewModel.delArticulo(articulo!!)
             }
+
+            override fun onArticuloEditar(articulo: Articulo?) {
+                val action = ListaFragmentDirections.actionListaFragmentToRedactarFragment(articulo)
+                findNavController().navigate(action)
+            }
         }
     }
 }
