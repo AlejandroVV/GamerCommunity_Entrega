@@ -36,6 +36,7 @@ class ListaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvPerfilLista.text = LoginFragment().getEmail()
         iniciaRecyclerView()
         iniciaCRUD()
         viewModel.articulosLiveData.observe(viewLifecycleOwner, Observer<List<Articulo>> { lista ->

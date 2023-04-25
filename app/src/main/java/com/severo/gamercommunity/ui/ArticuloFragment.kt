@@ -49,7 +49,7 @@ class ArticuloFragment : Fragment() {
 
     private fun iniciaArticulo(articulo: Articulo) {
         binding.etTitulo.setText(articulo.titulo)
-        binding.etAutor.setText("${articulo.usuario}")
+        binding.etAutor.setText("Escrito por ${articulo.usuario}")
         binding.etArticulo.setText(articulo.contenido)
         binding.rbValoracion.rating = articulo.valoracion
 //cambiamos el título
@@ -59,16 +59,14 @@ class ArticuloFragment : Fragment() {
     private fun guardarArticulo(articulo: Articulo) {
 //recuperamos los datos
         var id = articulo.id
-        val titulo = binding.etTitulo.text.toString()
+        val titulo = articulo.titulo
         val descripcion = articulo.descripcion
-        val contenido = binding.etArticulo.text.toString()
+        val contenido = articulo.contenido
         val valoracion=binding.rbValoracion.rating
-        val usuario=binding.etAutor.text.toString()
+        val usuario= articulo.usuario
         val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
 
-//guardamos la tarea desde el viewmodel
         viewModel.addArticulo(articulo)
-//salimos de editarFragment
         findNavController().popBackStack()
     }
 
