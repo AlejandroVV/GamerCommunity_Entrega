@@ -85,5 +85,6 @@ class RedactarFragment : Fragment() {
         binding.etDescripcion.setText(articulo.descripcion)
         binding.etContenidoRedactar.setText(articulo.contenido)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "Artículo ${articulo.id}"
+        (requireActivity() as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(false)
     }
 }

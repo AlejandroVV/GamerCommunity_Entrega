@@ -2,11 +2,16 @@ package com.severo.gamercommunity.model.temp
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.model.Articulo
 
 object ModelTempArticulo {
+    //BBDD
+    val db = Firebase.firestore
     //lista de articulos
     private val articulos = ArrayList<Articulo>()
     //LiveData para observar en la vista los cambios en la lista
@@ -18,7 +23,6 @@ object ModelTempArticulo {
     //Permite iniciar el objeto Singleton
     operator fun invoke(context: Context){
         this.application= context.applicationContext as Application
-        iniciaPrueba()
     }
 
     /**
@@ -35,36 +39,35 @@ object ModelTempArticulo {
      * que permitirá avisar a quien esté observando
      */
     fun addArticulo(articulo: Articulo) {
+        var id = articulo.id
+        var titulo = articulo.titulo
+        var descripcion = articulo.descripcion
+        var contenido = articulo.contenido
+        var valoracion = articulo.valoracion
+        var usuario = articulo.usuario
+        var valoraciones = hashMapOf<String,Float>(usuario to valoracion)
         val pos = articulos.indexOf(articulo)
         if (pos < 0) {//si no existe
             articulos.add(articulo)
-            println("ID: ${articulo.id}")
         } else {
+            db.collection("articulos").document(id.toString())
+                .get().addOnSuccessListener {
+                    valoraciones = it.get("valoraciones") as HashMap<String, Float>
+                }
             articulos[pos] = articulo
         }
-    //actualiza el LiveData
-        articulosLiveData.value = articulos
-    }
-    fun iniciaPrueba() {
-        val tecnicos = listOf(
-            "Pepe Gotero",
-            "Sacarino Pómez",
-            "Mortadelo Fernández",
-        )
-        lateinit var articulo: Articulo
-        (1..10).forEach({
-            articulo = Articulo(
-                "Titulo $it",
-                "Descripción",
-                "Contenido",
-                3.5F,
-                tecnicos.random()
+        db.collection("articulos").document(id.toString())
+            .set(
+                hashMapOf(
+                    "id" to id,
+                    "titulo" to titulo,
+                    "descripcion" to descripcion,
+                    "contenido" to contenido,
+                    "usuario" to usuario,
+                    "valoraciones" to valoraciones
+                )
             )
-            articulos.add(articulo)
-            var pos = articulos.indexOf(articulo)
-            println("ID: $pos")
-        })
-//actualizamos el LiveData
+    //actualiza el LiveData
         articulosLiveData.value = articulos
     }
     /**

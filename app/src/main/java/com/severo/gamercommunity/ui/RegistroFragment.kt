@@ -20,6 +20,8 @@ class RegistroFragment : Fragment() {
 
     private var _binding: FragmentRegistroBinding? = null
 
+    private var email = ""
+    private var pwdEmail = ""
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -36,10 +38,14 @@ class RegistroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ocultar(false)
+        binding.btRegistro.setOnClickListener {
+            validador()
+        }
         binding.btVolver.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
-        binding.btRegistro.setOnClickListener {
+        binding.btCambiar.setOnClickListener {
             registrador()
         }
     }
@@ -49,30 +55,92 @@ class RegistroFragment : Fragment() {
         _binding = null
     }
 
-    private fun registrador() {
-        var email = binding.etEmail.text.toString()
-        var pwd = binding.etPassword.text.toString()
-        var pwd2 = binding.etRepetir.text.toString()
-        if (email.isNotEmpty() && pwd.isNotEmpty() && pwd == pwd2){
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pwd)
+    private fun validador(){
+
+        val titulo1 = "Fallo al verificar"
+        val mensaje1 = "Se deben rellenar todos los campos"
+        val mensaje2 = "Compruebe el correo y la contraseña"
+        var nombre = binding.etNombre.text.toString()
+        var userName = binding.etUser.text.toString()
+        email = binding.etEmail.text.toString()
+        pwdEmail = binding.etPasswordEmail.text.toString()
+        if (nombre.isNotEmpty() && userName.isNotEmpty() &&
+            email.isNotEmpty() && pwdEmail.isNotEmpty()){
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pwdEmail)
                 .addOnCompleteListener {
                     if(it.isSuccessful){
-                        findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                        ocultar(true)
                     } else {
-                        mostrarAlerta()
+                        mostrarAlerta(titulo1, mensaje2)
                     }
                 }
         } else {
-            mostrarAlerta()
+            mostrarAlerta(titulo1, mensaje1)
         }
     }
 
-    private fun mostrarAlerta(){
+    private fun registrador(){
+        val titulo = "Fallo al registrar"
+        val mensaje1 = "Se deben rellenar todos los campos"
+        val mensaje2 = "Las contraseñas no coinciden"
+        val tituloFinal = "Registro realizado con éxito"
+        val mensajeFinal = "Ya puede acceder a la aplicación"
+        var pwd = binding.etPassword.text.toString()
+        var repetir = binding.etRepetir.text.toString()
+        if(pwd.isNotEmpty() && pwd == repetir){
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,pwdEmail)
+                .addOnCompleteListener {
+                    if (it.isSuccessful){
+                        val user = FirebaseAuth.getInstance().currentUser
+                        user!!.updatePassword(pwd).addOnCompleteListener { task ->
+                            if (task.isSuccessful){
+                                mostrarAlerta(tituloFinal, mensajeFinal)
+                                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                            } else {
+                                mostrarAlerta(titulo, "Comprueba tu conexión a Internet")
+                            }
+                        }
+                    }
+                }
+        } else if (pwd != repetir) {
+            mostrarAlerta(titulo, mensaje2)
+        } else {
+            mostrarAlerta(titulo, mensaje1)
+        }
+    }
+
+    private fun mostrarAlerta(titulo: String, mensaje: String){
         val builder = AlertDialog.Builder(binding.registroLayout.context)
-        builder.setTitle("Fallo")
-        builder.setMessage("Registro fallido")
+        builder.setTitle(titulo)
+        builder.setMessage(mensaje)
         builder.setPositiveButton("Aceptar", null)
         val alerta = builder.create()
         alerta.show()
+    }
+
+    private fun ocultar(vista: Boolean){
+        if (!vista) {
+            binding.tvPassword.visibility = View.GONE
+            binding.etPassword.visibility = View.GONE
+            binding.tvRepetir.visibility = View.GONE
+            binding.etRepetir.visibility = View.GONE
+            binding.btCambiar.visibility = View.GONE
+        } else {
+            binding.tvNombre.visibility = View.GONE
+            binding.etNombre.visibility = View.GONE
+            binding.tvUser.visibility = View.GONE
+            binding.etUser.visibility = View.GONE
+            binding.tvPassword.visibility = View.VISIBLE
+            binding.etPassword.visibility = View.VISIBLE
+            binding.tvRepetir.visibility = View.VISIBLE
+            binding.etRepetir.visibility = View.VISIBLE
+            binding.btCambiar.visibility = View.VISIBLE
+            binding.btRegistro.visibility = View.GONE
+            binding.btVolver.visibility = View.GONE
+            binding.tvEmail.visibility = View.GONE
+            binding.etEmail.visibility = View.GONE
+            binding.tvPasswordEmail.visibility = View.GONE
+            binding.etPasswordEmail.visibility = View.GONE
+        }
     }
 }

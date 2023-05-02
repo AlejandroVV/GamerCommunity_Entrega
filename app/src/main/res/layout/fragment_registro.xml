@@ -29,7 +29,7 @@
                 android:text="@string/tv_user"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/etPasswordEmail" />
 
             <TextView
                 android:id="@+id/tvNombre"
@@ -49,7 +49,7 @@
                 android:text="@string/tv_email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/etRepetir"
@@ -69,9 +69,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:text="@string/bt_registro"
+                android:text="@string/bt_siguiente"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etRepetir" />
+                app:layout_constraintTop_toBottomOf="@+id/btCambiar" />
+
+            <Button
+                android:id="@+id/btVolver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/bt_volver"
+                app:layout_constraintEnd_toStartOf="@+id/btRegistro"
+                app:layout_constraintTop_toBottomOf="@+id/btCambiar" />
 
             <EditText
                 android:id="@+id/etUser"
@@ -96,16 +106,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
-
-            <Button
-                android:id="@+id/btVolver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/bt_volver"
-                app:layout_constraintEnd_toStartOf="@+id/btRegistro"
-                app:layout_constraintTop_toBottomOf="@+id/etRepetir" />
 
             <TextView
                 android:id="@+id/tvRepetir"
@@ -133,11 +133,10 @@
                 android:id="@+id/tvPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="@string/tv_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/etNombre" />
 
             <EditText
                 android:id="@+id/etNombre"
@@ -150,6 +149,39 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvNombre" />
+
+            <TextView
+                android:id="@+id/tvPasswordEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/tv_pwdemail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+            <EditText
+                android:id="@+id/etPasswordEmail"
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="@string/et_escribir"
+                android:inputType="textPassword"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPasswordEmail" />
+
+            <Button
+                android:id="@+id/btCambiar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/bt_cambiar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etRepetir" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

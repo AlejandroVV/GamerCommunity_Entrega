@@ -88,4 +88,5 @@ dependencies {
     // https://firebase.google.com/docs/android/setup#available-libraries
     //Firebase Authentication
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 }

@@ -9,10 +9,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.R
 import com.severo.gamercommunity.adapters.ArticuloAdapter
 import com.severo.gamercommunity.databinding.FragmentListaBinding
 import com.severo.gamercommunity.model.Articulo
+import com.severo.gamercommunity.model.temp.ModelTempArticulo
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ListaFragment : Fragment() {
@@ -36,8 +40,9 @@ class ListaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvPerfilLista.text = LoginFragment().getEmail()
+        binding.tvPerfilLista.text = Firebase.auth.currentUser?.email
         iniciaRecyclerView()
+        iniciaArticulos()
         iniciaCRUD()
         viewModel.articulosLiveData.observe(viewLifecycleOwner, Observer<List<Articulo>> { lista ->
             articulosAdapter.setLista(lista)
@@ -62,7 +67,7 @@ class ListaFragment : Fragment() {
 
     private fun iniciaCRUD(){
         binding.btNuevo.setOnClickListener {
-            val articulo = Articulo("","","", 0F, "")
+            val articulo = Articulo("","","", 0F, "usuario")
             val action = ListaFragmentDirections.actionListaFragmentToRedactarFragment(articulo)
             findNavController().navigate(action)
         }
@@ -85,5 +90,22 @@ class ListaFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    fun iniciaArticulos() {
+        ModelTempArticulo.db.collection("articulos").get()
+            .addOnSuccessListener { documentos ->
+                for(documento in documentos){
+                    var articulo: Articulo = Articulo(
+                        documento.id.toLongOrNull(),
+                        documento.get("titulo").toString(),
+                        documento.get("descripcion").toString(),
+                        documento.get("contenido").toString(),
+                        0F,
+                        documento.get("usuario").toString()
+                    )
+                    viewModel.addArticulo(articulo)
+                }
+            }
     }
 }
