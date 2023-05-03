@@ -39,34 +39,12 @@ object ModelTempArticulo {
      * que permitirá avisar a quien esté observando
      */
     fun addArticulo(articulo: Articulo) {
-        var id = articulo.id
-        var titulo = articulo.titulo
-        var descripcion = articulo.descripcion
-        var contenido = articulo.contenido
-        var valoracion = articulo.valoracion
-        var usuario = articulo.usuario
-        var valoraciones = hashMapOf<String,Float>(usuario to valoracion)
         val pos = articulos.indexOf(articulo)
         if (pos < 0) {//si no existe
             articulos.add(articulo)
         } else {
-            db.collection("articulos").document(id.toString())
-                .get().addOnSuccessListener {
-                    valoraciones = it.get("valoraciones") as HashMap<String, Float>
-                }
             articulos[pos] = articulo
         }
-        db.collection("articulos").document(id.toString())
-            .set(
-                hashMapOf(
-                    "id" to id,
-                    "titulo" to titulo,
-                    "descripcion" to descripcion,
-                    "contenido" to contenido,
-                    "usuario" to usuario,
-                    "valoraciones" to valoraciones
-                )
-            )
     //actualiza el LiveData
         articulosLiveData.value = articulos
     }
@@ -87,5 +65,39 @@ object ModelTempArticulo {
             id = articulos[articulos.lastIndex].id?.plus(1)
         }
         return id
+    }
+
+    fun addBD(articulo: Articulo){
+        var id = articulo.id
+        var titulo = articulo.titulo
+        var descripcion = articulo.descripcion
+        var contenido = articulo.contenido
+        var valoracion = articulo.valoracion
+        var usuario = articulo.usuario
+        var valoraciones = hashMapOf<String,Float>(usuario to valoracion)
+        val pos = articulos.indexOf(articulo)
+        if (pos > 0) {//si no existe
+            db.collection("articulos").document(id.toString())
+                .get().addOnSuccessListener {
+                    valoraciones = it.get("valoraciones") as HashMap<String, Float>
+                }
+        }
+        db.collection("articulos").document(id.toString())
+            .set(
+                hashMapOf(
+                    "id" to id,
+                    "titulo" to titulo,
+                    "descripcion" to descripcion,
+                    "contenido" to contenido,
+                    "usuario" to usuario,
+                    "valoraciones" to valoraciones
+                )
+            )
+    }
+
+    fun delBD(articulo: Articulo){
+        var id = articulo.id.toString()
+        db.collection("articulos").document(id)
+            .delete()
     }
 }

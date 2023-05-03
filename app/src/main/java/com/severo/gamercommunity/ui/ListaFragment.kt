@@ -10,7 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.R
 import com.severo.gamercommunity.adapters.ArticuloAdapter
@@ -23,6 +25,7 @@ class ListaFragment : Fragment() {
     private var _binding: FragmentListaBinding? = null
     private val viewModel: AppViewModel by activityViewModels()
     lateinit var articulosAdapter:ArticuloAdapter
+    private val db = Firebase.firestore
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,6 +50,27 @@ class ListaFragment : Fragment() {
         viewModel.articulosLiveData.observe(viewLifecycleOwner, Observer<List<Articulo>> { lista ->
             articulosAdapter.setLista(lista)
         })
+        db.collection("articulos").addSnapshotListener { documentos, error ->
+            if(error != null){
+                return@addSnapshotListener
+            }
+            for (documento in documentos!!.documentChanges){
+                documento.document
+                var articulo: Articulo = Articulo(
+                    documento.document.id.toLongOrNull(),
+                    documento.document.get("titulo").toString(),
+                    documento.document.get("descripcion").toString(),
+                    documento.document.get("contenido").toString(),
+                    0F,
+                    documento.document.get("usuario").toString()
+                )
+                when(documento.type){
+                    DocumentChange.Type.ADDED -> viewModel.addArticulo(articulo)
+                    DocumentChange.Type.MODIFIED -> viewModel.addArticulo(articulo)
+                    DocumentChange.Type.REMOVED -> viewModel.delArticulo(articulo)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

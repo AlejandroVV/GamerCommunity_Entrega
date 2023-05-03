@@ -3,9 +3,12 @@ package com.severo.gamercommunity.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.severo.gamercommunity.databinding.ItemArticuloBinding
 import com.severo.gamercommunity.model.Articulo
+import com.severo.gamercommunity.model.temp.ModelTempArticulo
+import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder>() {
     var listaArticulos: List<Articulo>?=null
@@ -24,6 +27,7 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
             binding.ivBorrar.setOnClickListener(){
                 val tarea=listaArticulos?.get(this.adapterPosition)
                 onArticuloClickListener?.onTareaBorrarClick(tarea)
+                ModelTempArticulo.delBD(tarea!!)
             }
             binding.root.setOnClickListener(){
                 val tarea=listaArticulos?.get(this.adapterPosition)
@@ -52,7 +56,7 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
         with(holder) {
 //cogemos la tarea a mostrar y rellenamos los campos del ViewHolder
             with(listaArticulos!!.get(position)) {
-                if (this.usuario != "Pepe Gotero"){
+                if (this.usuario != "usuario"){
                     binding.ivBorrar.visibility = View.GONE
                     binding.btEditar.visibility = View.GONE
                 } else {

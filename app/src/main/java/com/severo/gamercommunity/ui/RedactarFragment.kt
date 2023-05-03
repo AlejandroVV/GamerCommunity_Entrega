@@ -14,6 +14,7 @@ import com.severo.gamercommunity.R
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.databinding.FragmentRedactarBinding
 import com.severo.gamercommunity.model.Articulo
+import com.severo.gamercommunity.model.temp.ModelTempArticulo
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 
@@ -61,6 +62,7 @@ class RedactarFragment : Fragment() {
         val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
 
 //guardamos la tarea desde el viewmodel
+        ModelTempArticulo.addBD(articulo)
         viewModel.addArticulo(articulo)
 //salimos de editarFragment
         findNavController().popBackStack()
