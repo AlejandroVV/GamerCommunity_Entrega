@@ -117,6 +117,8 @@ class ListaFragment : Fragment() {
     }
 
     fun iniciaArticulos() {
+        binding.btNuevo.isEnabled = false
+        binding.btChatLista.isEnabled = false
         ModelTempArticulo.db.collection("articulos").get()
             .addOnSuccessListener { documentos ->
                 for(documento in documentos){
@@ -131,5 +133,7 @@ class ListaFragment : Fragment() {
                     viewModel.addArticulo(articulo)
                 }
             }
+        binding.btNuevo.isEnabled = true
+        binding.btChatLista.isEnabled = true
     }
 }

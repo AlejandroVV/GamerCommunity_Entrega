@@ -66,8 +66,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:text="@string/lorem" />
+                android:inputType="textMultiLine" />
 
             <TextView
                 android:id="@+id/tvValoracion"
@@ -83,10 +82,35 @@
                 android:layout_gravity="center"
                 android:rating="0" />
 
+            <TextView
+                android:id="@+id/tvRedactarComentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <EditText
+                android:id="@+id/etRedactarComentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/btRedactarComentario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="5dp"
+                android:text="Comentar" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvComentarios"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_comentario" />
         </LinearLayout>
     </ScrollView>
 

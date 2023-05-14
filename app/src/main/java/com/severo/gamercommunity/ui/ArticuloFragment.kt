@@ -7,17 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.severo.gamercommunity.adapters.ArticuloAdapter
+import com.severo.gamercommunity.adapters.ComentarioAdapter
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.model.Articulo
+import com.severo.gamercommunity.model.Comentario
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ArticuloFragment : Fragment() {
     private var _binding: FragmentArticuloBinding? = null
     private val args: ArticuloFragmentArgs by navArgs()
     private val viewModel: AppViewModel by activityViewModels()
+    lateinit var comentariosAdapter:ComentarioAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -36,10 +42,18 @@ class ArticuloFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iniciaArticulo(args.articulo!!)
+        iniciaRecyclerView()
+        iniciaCRUD()
         binding.btGuardarArticulo.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
         soloLectura()
+        viewModel.comentariosLiveData.observe(viewLifecycleOwner, Observer<List<Comentario>> { lista ->
+            comentariosAdapter.setLista(lista)
+        })
+        binding.btChatArticulo.setOnClickListener {
+          println(comentariosAdapter.itemCount)
+        }
     }
 
     override fun onDestroyView() {
@@ -70,18 +84,40 @@ class ArticuloFragment : Fragment() {
         findNavController().popBackStack()
     }
 
-    /*private fun iniciaFabGuardar() {
-        binding.fabGuardar.setOnClickListener {
-            if (binding.etTecnico.text.toString().isNullOrEmpty() ||
-                binding.etDescripcion.text.toString().isNullOrEmpty())
-                muestraMensajeError()
-            else
-                guardaTarea()
+    private fun iniciaRecyclerView() {
+//creamos el adaptador
+        comentariosAdapter = ComentarioAdapter()
+        with(binding.rvComentarios) {
+//Creamos el layoutManager
+            layoutManager = LinearLayoutManager(activity)
+//le asignamos el adaptador
+            adapter = comentariosAdapter
         }
-    }*/
-    private fun muestraMensajeError() {
-        Snackbar.make(binding.root, "Es necesario rellenar todos los campos", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
+    }
+
+    private fun iniciaCRUD(){
+
+        binding.btRedactarComentario.setOnClickListener {
+            if(binding.etRedactarComentario.text.isNotEmpty()){
+                var contenido = binding.etRedactarComentario.text.toString()
+                var usuario = "usuario"
+                var comentario = Comentario(contenido, usuario)
+                viewModel.addComentario(comentario)
+                binding.etRedactarComentario.setText("")
+            }
+        }
+
+        comentariosAdapter.onComentarioClickListener = object :
+            ComentarioAdapter.OnComentarioClickListener {
+
+            override fun onComentarioEditarClick(comentario: Comentario?) {
+                viewModel.addComentario(comentario!!)
+            }
+
+            override fun onComentarioBorrarClick(comentario: Comentario?){
+                viewModel.delComentario(comentario!!)
+            }
+        }
     }
 
     private fun soloLectura(){

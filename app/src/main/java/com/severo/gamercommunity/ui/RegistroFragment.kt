@@ -59,7 +59,9 @@ class RegistroFragment : Fragment() {
 
         val titulo1 = "Fallo al verificar"
         val mensaje1 = "Se deben rellenar todos los campos"
-        val mensaje2 = "Compruebe el correo y la contraseña"
+        val mensaje2 = "- Compruebe su conexión a Internet.\n" +
+                        "- Compruebe el correo y la contraseña.\n" +
+                        "- Puede que el correo ya esté registrado."
         var nombre = binding.etNombre.text.toString()
         var userName = binding.etUser.text.toString()
         email = binding.etEmail.text.toString()
@@ -70,9 +72,9 @@ class RegistroFragment : Fragment() {
                 .addOnCompleteListener {
                     if(it.isSuccessful){
                         ocultar(true)
-                    } else {
-                        mostrarAlerta(titulo1, mensaje2)
                     }
+                }.addOnFailureListener {
+                    mostrarAlerta(titulo1, mensaje2)
                 }
         } else {
             mostrarAlerta(titulo1, mensaje1)
@@ -83,6 +85,8 @@ class RegistroFragment : Fragment() {
         val titulo = "Fallo al registrar"
         val mensaje1 = "Se deben rellenar todos los campos"
         val mensaje2 = "Las contraseñas no coinciden"
+        val mensaje3 = "- Compruebe su conexión a Internet.\n" +
+                        "- Puede que el correo ya esté registrado."
         val tituloFinal = "Registro realizado con éxito"
         val mensajeFinal = "Ya puede acceder a la aplicación"
         var pwd = binding.etPassword.text.toString()
@@ -96,11 +100,11 @@ class RegistroFragment : Fragment() {
                             if (task.isSuccessful){
                                 mostrarAlerta(tituloFinal, mensajeFinal)
                                 findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-                            } else {
-                                mostrarAlerta(titulo, "Comprueba tu conexión a Internet")
                             }
                         }
                     }
+                }.addOnFailureListener {
+                    mostrarAlerta(titulo, mensaje3)
                 }
         } else if (pwd != repetir) {
             mostrarAlerta(titulo, mensaje2)

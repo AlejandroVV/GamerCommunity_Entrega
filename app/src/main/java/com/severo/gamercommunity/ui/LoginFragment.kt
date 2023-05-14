@@ -46,6 +46,10 @@ class LoginFragment : Fragment() {
         }
 
         binding.btLogin.setOnClickListener {
+            var titulo = "Acceso denegado"
+            var mensaje1 = "- Compruebe el correo y la contraseña.\n" +
+                            "- Asegúrese de estar conectado a Internet."
+            var mensaje2 = "Se deben rellenar todos los campos"
             var email = binding.etEmailLogin.text.toString()
             var pwd = binding.etPasswordLogin.text.toString()
             if (email.isNotEmpty() && pwd.isNotEmpty()){
@@ -53,10 +57,12 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener {
                         if (it.isSuccessful){
                             findNavController().navigate(R.id.action_LoginFragment_to_listaFragment)
-                        } else {
-                           mostrarAlerta()
                         }
+                    }.addOnFailureListener {
+                        mostrarAlerta(titulo,mensaje1)
                     }
+            } else {
+                mostrarAlerta(titulo,mensaje2)
             }
         }
 
@@ -68,11 +74,10 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun mostrarAlerta(){
+    private fun mostrarAlerta(titulo: String, mensaje: String){
         val builder = AlertDialog.Builder(binding.loginLayout.context)
-        builder.setTitle("Acceso denegado")
-        builder.setMessage("Compruebe el correo y la contraseña\n" +
-                            "Asegúrese de estar conectado a Internet")
+        builder.setTitle(titulo)
+        builder.setMessage(mensaje)
         builder.setPositiveButton("Aceptar", null)
         val alerta = builder.create()
         alerta.show()
