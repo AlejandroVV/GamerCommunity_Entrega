@@ -4,9 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.Comentario
 
 object ModelTempComentario {
+
+    val db = ModelTempArticulo.db
 
     private val comentarios = ArrayList<Comentario>()
 
@@ -17,7 +20,7 @@ object ModelTempComentario {
 
     operator fun invoke(context: Context){
         this.application= context.applicationContext as Application
-        iniciaPruebaTareas()
+        //iniciaPruebaTareas()
     }
 
     fun getAllComentarios(): LiveData<ArrayList<Comentario>> {
@@ -37,26 +40,8 @@ object ModelTempComentario {
         comentariosLiveData.value = comentarios
     }
 
-    fun iniciaPruebaTareas() {
-        val tecnicos = listOf(
-            "Pepe Gotero",
-            "Sacarino Pómez",
-            "Mortadelo Fernández",
-            "Filemón López",
-            "Zipi Climent",
-            "Zape Gómez"
-        )
-        lateinit var comentario: Comentario
-        (1..10).forEach({
-            comentario = Comentario(
-                "tarea $it realizada por el técnico \nLorem ipsum dolor sit amet, consectetur adipiscing " +
-                        "elit. Mauris consequat ligula et vehicula mattis. Etiam tristique ornare lacinia. Vestibulum lacus " +
-                        "magna, dignissim et tempor id, convallis sed augue",
-                tecnicos.random(),
-            )
-            comentarios.add(comentario)
-        })
-//actualizamos el LiveData
+    fun limpiarReciclerView() {
+        comentarios.removeAll(comentarios.toSet())
         comentariosLiveData.value = comentarios
     }
 
@@ -73,5 +58,26 @@ object ModelTempComentario {
             id = comentarios[comentarios.lastIndex].id?.plus(1)
         }
         return id
+    }
+
+    fun addBD(articulo: Articulo, comentario: Comentario){
+        var id = comentario.id
+        var contenido = comentario.contenido
+        var usuario = comentario.usuario
+        db.collection("articulos").document(articulo.id.toString())
+            .collection("comentarios").document(id.toString())
+            .set(
+                hashMapOf(
+                    "id" to id,
+                    "contenido" to contenido,
+                    "usuario" to usuario
+                )
+            )
+    }
+
+    fun delBD(articulo: Articulo, comentario: Comentario){
+        db.collection("articulos").document(articulo.id.toString())
+            .collection("comentarios").document(comentario.id.toString())
+            .delete()
     }
 }

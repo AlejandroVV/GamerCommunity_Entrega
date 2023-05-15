@@ -17,6 +17,7 @@ import com.severo.gamercommunity.adapters.ComentarioAdapter
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.Comentario
+import com.severo.gamercommunity.model.temp.ModelTempComentario
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ArticuloFragment : Fragment() {
@@ -43,7 +44,9 @@ class ArticuloFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         iniciaArticulo(args.articulo!!)
         iniciaRecyclerView()
-        iniciaCRUD()
+        ModelTempComentario.limpiarReciclerView()
+        iniciarComentarios(args.articulo!!)
+        iniciaCRUD(args.articulo!!)
         binding.btGuardarArticulo.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
@@ -52,7 +55,6 @@ class ArticuloFragment : Fragment() {
             comentariosAdapter.setLista(lista)
         })
         binding.btChatArticulo.setOnClickListener {
-          println(comentariosAdapter.itemCount)
         }
     }
 
@@ -95,13 +97,14 @@ class ArticuloFragment : Fragment() {
         }
     }
 
-    private fun iniciaCRUD(){
+    private fun iniciaCRUD(articulo: Articulo){
 
         binding.btRedactarComentario.setOnClickListener {
             if(binding.etRedactarComentario.text.isNotEmpty()){
                 var contenido = binding.etRedactarComentario.text.toString()
                 var usuario = "usuario"
                 var comentario = Comentario(contenido, usuario)
+                ModelTempComentario.addBD(articulo, comentario)
                 viewModel.addComentario(comentario)
                 binding.etRedactarComentario.setText("")
             }
@@ -111,13 +114,31 @@ class ArticuloFragment : Fragment() {
             ComentarioAdapter.OnComentarioClickListener {
 
             override fun onComentarioEditarClick(comentario: Comentario?) {
+                ModelTempComentario.addBD(articulo, comentario!!)
                 viewModel.addComentario(comentario!!)
             }
 
             override fun onComentarioBorrarClick(comentario: Comentario?){
+                ModelTempComentario.delBD(articulo, comentario!!)
                 viewModel.delComentario(comentario!!)
             }
         }
+    }
+
+    private fun iniciarComentarios(articulo: Articulo){
+        ModelTempComentario.db.collection("articulos")
+            .document(articulo.id.toString())
+            .collection("comentarios").get()
+            .addOnSuccessListener {documentos ->
+                for (documento in documentos){
+                    var comentario = Comentario(
+                        documento.id.toLongOrNull(),
+                        documento.get("contenido").toString(),
+                        documento.get("usuario").toString()
+                    )
+                    ModelTempComentario.addComentario(comentario)
+                }
+            }
     }
 
     private fun soloLectura(){
