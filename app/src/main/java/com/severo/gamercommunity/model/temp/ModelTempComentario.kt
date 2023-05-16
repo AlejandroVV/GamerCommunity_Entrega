@@ -20,7 +20,6 @@ object ModelTempComentario {
 
     operator fun invoke(context: Context){
         this.application= context.applicationContext as Application
-        //iniciaPruebaTareas()
     }
 
     fun getAllComentarios(): LiveData<ArrayList<Comentario>> {

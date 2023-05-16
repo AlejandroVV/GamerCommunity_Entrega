@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.DocumentChange
 import com.severo.gamercommunity.adapters.ArticuloAdapter
 import com.severo.gamercommunity.adapters.ComentarioAdapter
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
@@ -42,18 +43,40 @@ class ArticuloFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iniciaArticulo(args.articulo!!)
+        var articulo = args.articulo!!
+        iniciaArticulo(articulo)
         iniciaRecyclerView()
         ModelTempComentario.limpiarReciclerView()
-        iniciarComentarios(args.articulo!!)
-        iniciaCRUD(args.articulo!!)
+        iniciarComentarios(articulo)
+        iniciaCRUD(articulo)
         binding.btGuardarArticulo.setOnClickListener {
-            guardarArticulo(args.articulo!!)
+            guardarArticulo(articulo)
         }
         soloLectura()
         viewModel.comentariosLiveData.observe(viewLifecycleOwner, Observer<List<Comentario>> { lista ->
             comentariosAdapter.setLista(lista)
         })
+        ModelTempComentario.db.collection("articulos")
+            .document(articulo.id.toString())
+            .collection("comentarios")
+            .addSnapshotListener{ documentos, error ->
+                if(error != null){
+                    return@addSnapshotListener
+                }
+                for (documento in documentos!!.documentChanges){
+                    documento.document
+                    var comentario = Comentario(
+                        documento.document.id.toLongOrNull(),
+                        documento.document.get("contenido").toString(),
+                        documento.document.get("usuario").toString()
+                    )
+                    when(documento.type){
+                        DocumentChange.Type.ADDED -> ModelTempComentario.addComentario(comentario)
+                        DocumentChange.Type.MODIFIED -> ModelTempComentario.addComentario(comentario)
+                        DocumentChange.Type.REMOVED -> ModelTempComentario.delComentario(comentario)
+                    }
+                }
+            }
         binding.btChatArticulo.setOnClickListener {
         }
     }
