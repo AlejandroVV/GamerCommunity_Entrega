@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.severo.gamercommunity.databinding.ItemArticuloBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.temp.ModelTempArticulo
+import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder>() {
     var listaArticulos: List<Articulo>?=null
     var onArticuloClickListener:OnArticuloClickListener?=null
+    private var util = Util()
 
     fun setLista(lista:List<Articulo>){
         listaArticulos=lista
@@ -52,11 +54,12 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
     override fun getItemCount(): Int = listaArticulos?.size?:0
 
     override fun onBindViewHolder(holder: ArticuloViewHolder, position: Int) {
+        var email = util.getEmail()
         //Nos pasan la posición del item a mostrar en el viewHolder
         with(holder) {
 //cogemos la tarea a mostrar y rellenamos los campos del ViewHolder
             with(listaArticulos!!.get(position)) {
-                if (this.usuario != "usuario"){
+                if (this.email != email){
                     binding.ivBorrar.visibility = View.GONE
                     binding.btEditar.visibility = View.GONE
                 } else {

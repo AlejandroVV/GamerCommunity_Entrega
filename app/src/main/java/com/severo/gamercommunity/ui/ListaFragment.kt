@@ -19,6 +19,7 @@ import com.severo.gamercommunity.adapters.ArticuloAdapter
 import com.severo.gamercommunity.databinding.FragmentListaBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.temp.ModelTempArticulo
+import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ListaFragment : Fragment() {
@@ -26,6 +27,9 @@ class ListaFragment : Fragment() {
     private val viewModel: AppViewModel by activityViewModels()
     lateinit var articulosAdapter:ArticuloAdapter
     private val db = Firebase.firestore
+    private var util = Util()
+    lateinit var username:String
+    lateinit var email:String
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,7 +47,9 @@ class ListaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvPerfilLista.text = Firebase.auth.currentUser?.email
+        username = util.getUserName()
+        email = util.getEmail()
+        binding.tvPerfilLista.text = util.getUserName()
         iniciaRecyclerView()
         iniciaArticulos()
         iniciaCRUD()
@@ -62,7 +68,8 @@ class ListaFragment : Fragment() {
                     documento.document.get("descripcion").toString(),
                     documento.document.get("contenido").toString(),
                     0F,
-                    documento.document.get("usuario").toString()
+                    documento.document.get("usuario").toString(),
+                    documento.document.get("email").toString(),
                 )
                 when(documento.type){
                     DocumentChange.Type.ADDED -> viewModel.addArticulo(articulo)
@@ -71,6 +78,7 @@ class ListaFragment : Fragment() {
                 }
             }
         }
+        binding.btChatLista.setOnClickListener {}
     }
 
     override fun onDestroyView() {
@@ -91,7 +99,7 @@ class ListaFragment : Fragment() {
 
     private fun iniciaCRUD(){
         binding.btNuevo.setOnClickListener {
-            val articulo = Articulo("","","", 0F, "usuario")
+            val articulo = Articulo("","","", 0F, username, email)
             val action = ListaFragmentDirections.actionListaFragmentToRedactarFragment(articulo)
             findNavController().navigate(action)
         }
@@ -126,7 +134,8 @@ class ListaFragment : Fragment() {
                         documento.get("descripcion").toString(),
                         documento.get("contenido").toString(),
                         0F,
-                        documento.get("usuario").toString()
+                        documento.get("usuario").toString(),
+                        documento.get("email").toString(),
                     )
                     viewModel.addArticulo(articulo)
                 }

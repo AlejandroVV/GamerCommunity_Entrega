@@ -63,13 +63,15 @@ object ModelTempComentario {
         var id = comentario.id
         var contenido = comentario.contenido
         var usuario = comentario.usuario
+        var email = comentario.email
         db.collection("articulos").document(articulo.id.toString())
             .collection("comentarios").document(id.toString())
             .set(
                 hashMapOf(
                     "id" to id,
                     "contenido" to contenido,
-                    "usuario" to usuario
+                    "usuario" to usuario,
+                    "email" to email
                 )
             )
     }

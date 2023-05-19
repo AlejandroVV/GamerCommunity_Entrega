@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.R
 import com.severo.gamercommunity.databinding.FragmentRegistroBinding
 
@@ -22,6 +26,8 @@ class RegistroFragment : Fragment() {
 
     private var email = ""
     private var pwdEmail = ""
+    private var userName = ""
+    private var nombre = ""
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -62,8 +68,8 @@ class RegistroFragment : Fragment() {
         val mensaje2 = "- Compruebe su conexión a Internet.\n" +
                         "- Compruebe el correo y la contraseña.\n" +
                         "- Puede que el correo ya esté registrado."
-        var nombre = binding.etNombre.text.toString()
-        var userName = binding.etUser.text.toString()
+        nombre = binding.etNombre.text.toString()
+        userName = binding.etUser.text.toString()
         email = binding.etEmail.text.toString()
         pwdEmail = binding.etPasswordEmail.text.toString()
         if (nombre.isNotEmpty() && userName.isNotEmpty() &&
@@ -95,6 +101,8 @@ class RegistroFragment : Fragment() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,pwdEmail)
                 .addOnCompleteListener {
                     if (it.isSuccessful){
+                        val db = Firebase.firestore
+                        addToBD(db)
                         val user = FirebaseAuth.getInstance().currentUser
                         user!!.updatePassword(pwd).addOnCompleteListener { task ->
                             if (task.isSuccessful){
@@ -111,6 +119,19 @@ class RegistroFragment : Fragment() {
         } else {
             mostrarAlerta(titulo, mensaje1)
         }
+    }
+
+    private fun addToBD(db: FirebaseFirestore){
+        var amigos = ArrayList<String>()
+        db.collection("usuarios").document(email)
+            .set(
+                hashMapOf(
+                    "email" to email,
+                    "username" to userName,
+                    "nombre" to nombre,
+                    "amigos" to amigos
+                )
+            )
     }
 
     private fun mostrarAlerta(titulo: String, mensaje: String){

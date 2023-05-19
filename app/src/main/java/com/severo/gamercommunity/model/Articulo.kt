@@ -12,6 +12,7 @@ data class Articulo(
     val contenido:String,
     val valoracion:Float,
     val usuario:String,
+    val email:String
 ): Parcelable {
 
     //segundo constructor que genera id nuevo
@@ -19,8 +20,10 @@ data class Articulo(
                  descripcion: String,
                  contenido: String,
                  valoracion: Float,
-                 usuario: String
-                 ):this(ModelTempArticulo.getId(), titulo, descripcion, contenido, valoracion, usuario){}
+                 usuario: String,
+                 email: String
+                 ):this(ModelTempArticulo.getId(), titulo, descripcion, contenido, valoracion,
+                        usuario, email){}
 
     override fun equals(other: Any?): Boolean {
         return (other is Articulo)&&(this.id == other?.id)

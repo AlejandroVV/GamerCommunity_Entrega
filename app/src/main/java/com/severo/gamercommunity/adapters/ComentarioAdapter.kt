@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.severo.gamercommunity.databinding.ItemComentarioBinding
 import com.severo.gamercommunity.model.Comentario
+import com.severo.gamercommunity.utils.Util
 
 class ComentarioAdapter():RecyclerView.Adapter<ComentarioAdapter.ComentarioViewHolder>() {
 
     var listaComentarios: List<Comentario>?=null
     var onComentarioClickListener:OnComentarioClickListener?=null
-
+    private var util = Util()
     fun setLista(lista:List<Comentario>){
         listaComentarios=lista
 //notifica al adaptador que hay cambios y tiene que redibujar el ReciclerView
@@ -54,7 +55,8 @@ class ComentarioAdapter():RecyclerView.Adapter<ComentarioAdapter.ComentarioViewH
                 var id = comentario.id
                 var contenido = binding.etComentario.text.toString()
                 var usuario = comentario.usuario
-                var editado = Comentario(id, contenido, usuario)
+                var email = comentario.email
+                var editado = Comentario(id, contenido, usuario, email)
                 onComentarioClickListener?.onComentarioEditarClick(editado)
                 binding.btGuardarComentario.visibility = View.GONE
                 binding.btCancelarComentario.visibility = View.GONE
@@ -76,15 +78,16 @@ class ComentarioAdapter():RecyclerView.Adapter<ComentarioAdapter.ComentarioViewH
 
     override fun onBindViewHolder(holder: ComentarioViewHolder,
                                   position: Int) {
+        var email = util.getEmail()
         with(holder) {
 //cogemos la tarea a mostrar y rellenamos los campos del ViewHolder
             with(listaComentarios!![position]) {
-                binding.tvUserComentario.text = "$usuario ID: $id"
+                binding.tvUserComentario.text = usuario
                 binding.etComentario.visibility = View.GONE
                 binding.tvComentario.text = contenido
                 binding.btGuardarComentario.visibility = View.GONE
                 binding.btCancelarComentario.visibility = View.GONE
-                if(usuario.contains("usuario")){
+                if(this.email == email){
                     binding.btEditarComentario.visibility = View.VISIBLE
                     binding.btBorrar.visibility = View.VISIBLE
                 } else {

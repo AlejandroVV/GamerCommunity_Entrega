@@ -15,6 +15,7 @@ import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.databinding.FragmentRedactarBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.temp.ModelTempArticulo
+import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 
@@ -23,6 +24,7 @@ class RedactarFragment : Fragment() {
     private var _binding: FragmentRedactarBinding? = null
     private val args: RedactarFragmentArgs by navArgs()
     private val viewModel: AppViewModel by activityViewModels()
+    private var util = Util()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,6 +42,7 @@ class RedactarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvPerfilRedactar.text = util.getUserName()
         iniciaArticulo(args.articulo!!)
         binding.btGuardarRedactar.setOnClickListener {
             guardarArticulo(args.articulo!!)
@@ -57,9 +60,10 @@ class RedactarFragment : Fragment() {
         val titulo = binding.etTituloRedactar.text.toString()
         val descripcion = binding.etDescripcion.text.toString()
         val contenido = binding.etContenidoRedactar.text.toString()
-        val usuario= articulo.usuario
+        val usuario= util.getUserName()
         val valoracion = articulo.valoracion
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
+        val email = articulo.email
+        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email)
 
 //guardamos la tarea desde el viewmodel
         ModelTempArticulo.addBD(articulo)

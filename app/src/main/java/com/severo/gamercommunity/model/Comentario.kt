@@ -9,11 +9,13 @@ data class Comentario(
     var id:Long?=null,
     val contenido:String,
     val usuario:String,
+    val email:String
 ):Parcelable {
 
     constructor( contenido:String,
                  usuario:String,
-                 ):this(ModelTempComentario.getId(), contenido, usuario){}
+                 email: String
+                 ):this(ModelTempComentario.getId(), contenido, usuario, email){}
 
     override fun equals(other: Any?): Boolean {
             return (other is Comentario)&&(this.id == other?.id)

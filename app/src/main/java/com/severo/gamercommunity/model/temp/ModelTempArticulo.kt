@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.model.Articulo
@@ -74,6 +75,7 @@ object ModelTempArticulo {
         var contenido = articulo.contenido
         var valoracion = articulo.valoracion
         var usuario = articulo.usuario
+        var email = articulo.email
         var valoraciones = hashMapOf<String,Float>(usuario to valoracion)
         val pos = articulos.indexOf(articulo)
         if (pos > 0) {//si existe
@@ -90,6 +92,7 @@ object ModelTempArticulo {
                     "descripcion" to descripcion,
                     "contenido" to contenido,
                     "usuario" to usuario,
+                    "email" to email,
                     "valoraciones" to valoraciones
                 )
             )

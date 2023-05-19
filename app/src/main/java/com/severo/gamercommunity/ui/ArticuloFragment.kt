@@ -19,6 +19,7 @@ import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.Comentario
 import com.severo.gamercommunity.model.temp.ModelTempComentario
+import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
 class ArticuloFragment : Fragment() {
@@ -26,6 +27,7 @@ class ArticuloFragment : Fragment() {
     private val args: ArticuloFragmentArgs by navArgs()
     private val viewModel: AppViewModel by activityViewModels()
     lateinit var comentariosAdapter:ComentarioAdapter
+    private var util = Util()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -43,6 +45,7 @@ class ArticuloFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.tvPerfilArticulo.text = util.getUserName()
         var articulo = args.articulo!!
         iniciaArticulo(articulo)
         iniciaRecyclerView()
@@ -68,7 +71,8 @@ class ArticuloFragment : Fragment() {
                     var comentario = Comentario(
                         documento.document.id.toLongOrNull(),
                         documento.document.get("contenido").toString(),
-                        documento.document.get("usuario").toString()
+                        documento.document.get("usuario").toString(),
+                        documento.document.get("email").toString(),
                     )
                     when(documento.type){
                         DocumentChange.Type.ADDED -> ModelTempComentario.addComentario(comentario)
@@ -78,6 +82,7 @@ class ArticuloFragment : Fragment() {
                 }
             }
         binding.btChatArticulo.setOnClickListener {
+
         }
     }
 
@@ -103,7 +108,8 @@ class ArticuloFragment : Fragment() {
         val contenido = articulo.contenido
         val valoracion=binding.rbValoracion.rating
         val usuario= articulo.usuario
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario)
+        val email = articulo.email
+        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email)
 
         viewModel.addArticulo(articulo)
         findNavController().popBackStack()
@@ -125,8 +131,9 @@ class ArticuloFragment : Fragment() {
         binding.btRedactarComentario.setOnClickListener {
             if(binding.etRedactarComentario.text.isNotEmpty()){
                 var contenido = binding.etRedactarComentario.text.toString()
-                var usuario = "usuario"
-                var comentario = Comentario(contenido, usuario)
+                var usuario = util.getUserName()
+                var email = util.getEmail()
+                var comentario = Comentario(contenido, usuario, email)
                 ModelTempComentario.addBD(articulo, comentario)
                 viewModel.addComentario(comentario)
                 binding.etRedactarComentario.setText("")
@@ -157,7 +164,8 @@ class ArticuloFragment : Fragment() {
                     var comentario = Comentario(
                         documento.id.toLongOrNull(),
                         documento.get("contenido").toString(),
-                        documento.get("usuario").toString()
+                        documento.get("usuario").toString(),
+                        documento.get("email").toString()
                     )
                     ModelTempComentario.addComentario(comentario)
                 }
