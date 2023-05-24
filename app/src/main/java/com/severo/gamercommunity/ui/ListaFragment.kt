@@ -78,7 +78,10 @@ class ListaFragment : Fragment() {
                 }
             }
         }
-        binding.btChatLista.setOnClickListener {}
+        binding.btChatLista.setOnClickListener {
+            val action = ListaFragmentDirections.actionListaFragmentToChatFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {
@@ -133,7 +136,7 @@ class ListaFragment : Fragment() {
                         documento.get("titulo").toString(),
                         documento.get("descripcion").toString(),
                         documento.get("contenido").toString(),
-                        0F,
+                        documento.get("valoracion").toString().toFloat(),
                         documento.get("usuario").toString(),
                         documento.get("email").toString(),
                     )

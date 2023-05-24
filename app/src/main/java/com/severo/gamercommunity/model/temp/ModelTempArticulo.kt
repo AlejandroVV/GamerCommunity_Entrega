@@ -91,6 +91,7 @@ object ModelTempArticulo {
                     "titulo" to titulo,
                     "descripcion" to descripcion,
                     "contenido" to contenido,
+                    "valoracion" to valoracion,
                     "usuario" to usuario,
                     "email" to email,
                     "valoraciones" to valoraciones

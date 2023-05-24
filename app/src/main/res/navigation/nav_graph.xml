@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_listaFragment_to_redactarFragment"
             app:destination="@id/redactarFragment" />
+        <action
+            android:id="@+id/action_listaFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/articuloFragment"
@@ -53,6 +56,9 @@
             android:name="articulo"
             app:argType="com.severo.gamercommunity.model.Articulo"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_articuloFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/redactarFragment"
@@ -66,5 +72,30 @@
             android:name="articulo"
             app:argType="com.severo.gamercommunity.model.Articulo"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.severo.gamercommunity.ui.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_mensajeFragment"
+            app:destination="@id/mensajeFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_listaFragment"
+            app:destination="@id/listaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mensajeFragment"
+        android:name="com.severo.gamercommunity.ui.MensajeFragment"
+        android:label="fragment_mensaje"
+        tools:layout="@layout/fragment_mensaje" >
+        <argument
+            android:name="chat"
+            app:argType="com.severo.gamercommunity.model.Chat"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_mensajeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
 </navigation>

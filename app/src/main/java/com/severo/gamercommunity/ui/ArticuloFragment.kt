@@ -82,7 +82,8 @@ class ArticuloFragment : Fragment() {
                 }
             }
         binding.btChatArticulo.setOnClickListener {
-
+            val action = ArticuloFragmentDirections.actionArticuloFragmentToChatFragment()
+            findNavController().navigate(action)
         }
     }
 
