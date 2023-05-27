@@ -67,7 +67,7 @@ class ListaFragment : Fragment() {
                     documento.document.get("titulo").toString(),
                     documento.document.get("descripcion").toString(),
                     documento.document.get("contenido").toString(),
-                    0F,
+                    documento.document.get("valoracion").toString().toFloat(),
                     documento.document.get("usuario").toString(),
                     documento.document.get("email").toString(),
                 )

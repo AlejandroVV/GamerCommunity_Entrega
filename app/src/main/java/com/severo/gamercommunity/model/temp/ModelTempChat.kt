@@ -4,6 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.model.Chat
 
 object ModelTempChat {
@@ -12,10 +15,10 @@ object ModelTempChat {
     private val chatsLiveData = MutableLiveData<ArrayList<Chat>>(chats)
 
     private lateinit var application: Application
+    private val db = Firebase.firestore
 
     operator fun invoke(context: Context){
         this.application= context.applicationContext as Application
-        iniciaPruebaTareas()
     }
 
     fun getAllChats(): LiveData<ArrayList<Chat>> {
@@ -33,29 +36,18 @@ object ModelTempChat {
         chatsLiveData.value = chats
     }
 
-    fun iniciaPruebaTareas() {
-        val tecnicos = listOf(
-            "Pepe Gotero",
-            "Sacarino Pómez",
-            "Mortadelo Fernández",
-            "Filemón López",
-            "Zipi Climent",
-            "Zape Gómez"
-        )
-        lateinit var chat: Chat
-        (1..4).forEach({
-            var lista = listOf<String>(
-                tecnicos.random(),
-                tecnicos.random(),
+    fun addBD(chat: Chat){
+        var titulo = chat.titulo
+        var miembros = chat.miembros
+        var idBD = chat.idBD
+        db.collection("chats").document(idBD)
+            .set(
+                hashMapOf(
+                    "titulo" to titulo,
+                    "miembros" to miembros,
+                    "idBD" to idBD
+                )
             )
-            chat = Chat(
-                tecnicos.random(),
-                lista
-            )
-            chats.add(chat)
-        })
-
-        chatsLiveData.value = chats
     }
 
     fun delChat(chat: Chat) {
@@ -63,13 +55,9 @@ object ModelTempChat {
         chatsLiveData.value = chats
     }
 
-    fun getId() :Long?{
-        var id: Long?
-        if (chats.isEmpty()){
-            id = 0
-        } else {
-            id = chats[chats.lastIndex].id?.plus(1)
-        }
-        return id
+    fun delBD(chat: Chat){
+        var idBD = chat.idBD
+        db.collection("chats").document(idBD)
+            .delete()
     }
 }

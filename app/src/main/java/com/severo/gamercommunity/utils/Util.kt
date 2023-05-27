@@ -10,16 +10,15 @@ class Util {
     private var email = Firebase.auth.currentUser?.email
     private val db = Firebase.firestore
 
-    private fun setUserName(user: String){
-        userName = user
-    }
-
-    fun getUserName(): String{
+    constructor(){
         db.collection("usuarios").document(email.toString())
             .get().addOnSuccessListener {
                 var user = it.get("username").toString()
-                setUserName(user)
+                userName = user
             }
+    }
+
+    fun getUserName(): String{
         return userName
     }
 

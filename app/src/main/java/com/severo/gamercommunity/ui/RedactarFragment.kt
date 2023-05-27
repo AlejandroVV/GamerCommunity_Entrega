@@ -47,6 +47,10 @@ class RedactarFragment : Fragment() {
         binding.btGuardarRedactar.setOnClickListener {
             guardarArticulo(args.articulo!!)
         }
+        binding.btVolverRedactar.setOnClickListener {
+            val action = RedactarFragmentDirections.actionRedactarFragmentToListaFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

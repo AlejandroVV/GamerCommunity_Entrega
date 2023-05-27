@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.severo.gamercommunity.databinding.FragmentMensajeBinding
 import com.severo.gamercommunity.viewmodel.AppViewModel
@@ -33,6 +34,11 @@ class MensajeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as AppCompatActivity).supportActionBar?.title = args.chat!!.titulo
+
+        binding.btVolverChats.setOnClickListener {
+            val action = MensajeFragmentDirections.actionMensajeFragmentToChatFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

@@ -63,8 +63,8 @@
     <fragment
         android:id="@+id/redactarFragment"
         android:name="com.severo.gamercommunity.ui.RedactarFragment"
-        android:label="fragment_redactar"
-        tools:layout="@layout/fragment_redactar" >
+        android:label="@string/la_titulo"
+        tools:layout="@layout/fragment_redactar">
         <action
             android:id="@+id/action_redactarFragment_to_listaFragment"
             app:destination="@id/listaFragment" />
@@ -76,8 +76,8 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.severo.gamercommunity.ui.ChatFragment"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" >
+        android:label="@string/la_titulo"
+        tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/action_chatFragment_to_mensajeFragment"
             app:destination="@id/mensajeFragment" />
@@ -88,8 +88,8 @@
     <fragment
         android:id="@+id/mensajeFragment"
         android:name="com.severo.gamercommunity.ui.MensajeFragment"
-        android:label="fragment_mensaje"
-        tools:layout="@layout/fragment_mensaje" >
+        android:label="@string/la_titulo"
+        tools:layout="@layout/fragment_mensaje">
         <argument
             android:name="chat"
             app:argType="com.severo.gamercommunity.model.Chat"

@@ -8,12 +8,12 @@
     tools:context=".ui.RedactarFragment" >
 
     <ImageButton
-        android:id="@+id/btChatRedactar"
+        android:id="@+id/btVolverRedactar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:src="@android:drawable/ic_dialog_email"
+        android:src="@android:drawable/ic_menu_revert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/btChatRedactar"
+        app:layout_constraintEnd_toStartOf="@+id/btVolverRedactar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btChatRedactar">
+        app:layout_constraintTop_toBottomOf="@+id/btVolverRedactar">
 
         <LinearLayout
             android:layout_width="match_parent"

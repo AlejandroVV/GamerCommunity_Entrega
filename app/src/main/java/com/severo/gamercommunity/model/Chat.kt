@@ -7,15 +7,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Chat(
-    var id:Long?=null,
     val titulo:String,
     val miembros:List<String>,
+    val idBD: String
 ):Parcelable {
-    constructor(titulo: String,
-                miembros: List<String>,
-    ):this(ModelTempChat.getId(), titulo, miembros){}
 
     override fun equals(other: Any?): Boolean {
-        return (other is Chat)&&(this.id == other?.id)
+        return (other is Chat)&&(this.idBD == other?.idBD)
     }
 }
