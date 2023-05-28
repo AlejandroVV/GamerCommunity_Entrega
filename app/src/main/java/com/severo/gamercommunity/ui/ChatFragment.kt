@@ -1,6 +1,8 @@
 package com.severo.gamercommunity.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +17,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.severo.gamercommunity.adapters.ChatAdapter
 import com.severo.gamercommunity.databinding.FragmentChatBinding
+import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.Chat
+import com.severo.gamercommunity.model.temp.ModelTempArticulo
 import com.severo.gamercommunity.model.temp.ModelTempChat
 import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
@@ -121,8 +125,7 @@ class ChatFragment : Fragment() {
             }
 
             override fun onChatBorrarClick(chat: Chat?) {
-                ModelTempChat.delBD(chat!!)
-                viewModel.delChat(chat!!)
+               borrarChat(chat!!)
             }
         }
     }
@@ -140,5 +143,22 @@ class ChatFragment : Fragment() {
                         viewModel.addChat(chat)
                 }
             }
+    }
+
+    private fun borrarChat(chat: Chat){
+        AlertDialog.Builder(activity as Context)
+            .setTitle(android.R.string.dialog_alert_title)
+            .setMessage("¿Desea borrar el chat \"${chat.titulo}\"?")
+            .setPositiveButton(android.R.string.ok){v,_ ->
+                ModelTempChat.delBD(chat)
+                viewModel.delChat(chat)
+                v.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel){v,_->
+                v.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 }

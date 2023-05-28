@@ -29,7 +29,6 @@ class ArticuloAdapter(): RecyclerView.Adapter<ArticuloAdapter.ArticuloViewHolder
             binding.ivBorrar.setOnClickListener(){
                 val tarea=listaArticulos?.get(this.adapterPosition)
                 onArticuloClickListener?.onTareaBorrarClick(tarea)
-                ModelTempArticulo.delBD(tarea!!)
             }
             binding.root.setOnClickListener(){
                 val tarea=listaArticulos?.get(this.adapterPosition)

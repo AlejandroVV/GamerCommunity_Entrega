@@ -1,5 +1,7 @@
 package com.severo.gamercommunity.ui
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import com.severo.gamercommunity.adapters.ComentarioAdapter
 import com.severo.gamercommunity.databinding.FragmentArticuloBinding
 import com.severo.gamercommunity.model.Articulo
 import com.severo.gamercommunity.model.Comentario
+import com.severo.gamercommunity.model.temp.ModelTempArticulo
 import com.severo.gamercommunity.model.temp.ModelTempComentario
 import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
@@ -150,8 +153,7 @@ class ArticuloFragment : Fragment() {
             }
 
             override fun onComentarioBorrarClick(comentario: Comentario?){
-                ModelTempComentario.delBD(articulo, comentario!!)
-                viewModel.delComentario(comentario!!)
+               borrarComentario(articulo, comentario!!)
             }
         }
     }
@@ -171,6 +173,23 @@ class ArticuloFragment : Fragment() {
                     ModelTempComentario.addComentario(comentario)
                 }
             }
+    }
+
+    private fun borrarComentario(articulo: Articulo, comentario: Comentario){
+        AlertDialog.Builder(activity as Context)
+            .setTitle(android.R.string.dialog_alert_title)
+            .setMessage("¿Desea borrar este comentario?")
+            .setPositiveButton(android.R.string.ok){v,_ ->
+                ModelTempComentario.delBD(articulo, comentario)
+                viewModel.delComentario(comentario)
+                v.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel){v,_->
+                v.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 
     private fun soloLectura(){

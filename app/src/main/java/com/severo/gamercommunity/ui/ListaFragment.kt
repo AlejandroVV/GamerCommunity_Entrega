@@ -1,5 +1,7 @@
 package com.severo.gamercommunity.ui
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -108,16 +110,15 @@ class ListaFragment : Fragment() {
         }
         articulosAdapter.onArticuloClickListener = object :
             ArticuloAdapter.OnArticuloClickListener {
-            //**************Editar Tarea*************
+
             override fun onTareaClick(articulo: Articulo?) {
-//creamos acción enviamos argumento la tarea para editarla
+
                 val action = ListaFragmentDirections.actionListaFragmentToArticuloFragment(articulo)
                 findNavController().navigate(action)
             }
-            //***********Borrar Tarea************
+
             override fun onTareaBorrarClick(articulo: Articulo?) {
-//borramos directamente la tarea
-                viewModel.delArticulo(articulo!!)
+                borrarArticulo(articulo!!)
             }
 
             override fun onArticuloEditar(articulo: Articulo?) {
@@ -143,5 +144,22 @@ class ListaFragment : Fragment() {
                     viewModel.addArticulo(articulo)
                 }
             }
+    }
+
+    private fun borrarArticulo(articulo: Articulo){
+        AlertDialog.Builder(activity as Context)
+            .setTitle(android.R.string.dialog_alert_title)
+            .setMessage("¿Desea borrar el artículo \"${articulo.titulo}\"?")
+            .setPositiveButton(android.R.string.ok){v,_ ->
+                ModelTempArticulo.delBD(articulo)
+                viewModel.delArticulo(articulo)
+                v.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel){v,_->
+                v.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 }
