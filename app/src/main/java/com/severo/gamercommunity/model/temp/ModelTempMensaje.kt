@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.severo.gamercommunity.model.Chat
 import com.severo.gamercommunity.model.Mensaje
 
 object ModelTempMensaje {
@@ -13,10 +14,10 @@ object ModelTempMensaje {
         MutableLiveData<ArrayList<Mensaje>>(mensajes)
 
     private lateinit var application: Application
+    val db = ModelTempArticulo.db
 
     operator fun invoke(context: Context){
         this.application= context.applicationContext as Application
-        iniciaPruebaTareas()
     }
 
     fun getAllMensajes(): LiveData<ArrayList<Mensaje>> {
@@ -36,22 +37,8 @@ object ModelTempMensaje {
         mensajesLiveData.value = mensajes
     }
 
-    fun iniciaPruebaTareas() {
-        val tecnicos = listOf(
-            "Pepe Gotero",
-            "Sacarino Pómez",
-        )
-        lateinit var mensaje: Mensaje
-        (1..6).forEach({
-            mensaje = Mensaje(
-                "Mensaje $it realizado por el técnico \nLorem ipsum dolor sit amet, consectetur adipiscing " +
-                        "elit. Mauris consequat ligula et vehicula mattis. Etiam tristique ornare lacinia. Vestibulum lacus " +
-                        "magna, dignissim et tempor id, convallis sed augue",
-                tecnicos.random(),
-            )
-            mensajes.add(mensaje)
-        })
-
+    fun limpiarReciclerView() {
+        mensajes.removeAll(mensajes.toSet())
         mensajesLiveData.value = mensajes
     }
 
@@ -68,5 +55,21 @@ object ModelTempMensaje {
             id = mensajes[mensajes.lastIndex].id?.plus(1)
         }
         return id
+    }
+
+    fun addBD(chat: Chat, mensaje: Mensaje){
+        var id = mensaje.id.toString()
+        var contenido = mensaje.contenido
+        var autor = mensaje.autor
+
+        db.collection("chats").document(chat.idBD)
+            .collection("mensajes").document(id)
+            .set(
+                hashMapOf(
+                    "id" to id,
+                    "contenido" to contenido,
+                    "autor" to autor,
+                )
+            )
     }
 }

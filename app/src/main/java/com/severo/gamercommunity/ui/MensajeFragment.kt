@@ -13,7 +13,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.severo.gamercommunity.adapters.MensajeAdapter
 import com.severo.gamercommunity.databinding.FragmentMensajeBinding
+import com.severo.gamercommunity.model.Chat
 import com.severo.gamercommunity.model.Mensaje
+import com.severo.gamercommunity.model.temp.ModelTempMensaje
 import com.severo.gamercommunity.utils.Util
 import com.severo.gamercommunity.viewmodel.AppViewModel
 
@@ -40,8 +42,12 @@ class MensajeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = args.chat!!.titulo
+        var chat = args.chat!!
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = chat.titulo
+
         iniciaRecyclerView()
+        ModelTempMensaje.limpiarReciclerView()
+        iniciarMensajes(chat)
         viewModel.mensajesLiveData.observe(viewLifecycleOwner, Observer<List<Mensaje>> { lista ->
             mensajesAdapter.setLista(lista)
         })
@@ -53,8 +59,10 @@ class MensajeFragment : Fragment() {
             if (binding.etMensaje.text.isNotEmpty()){
                 var contenido = binding.etMensaje.text.toString()
                 var autor = util.getUserName()
-                var mensaje = Mensaje(contenido, autor)
+                var mensaje = Mensaje(contenido, util.getUserName())
+                ModelTempMensaje.addBD(chat, mensaje)
                 viewModel.addMensaje(mensaje)
+                binding.etMensaje.setText("")
             }
         }
     }
@@ -71,5 +79,20 @@ class MensajeFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             adapter = mensajesAdapter
         }
+    }
+
+    private fun iniciarMensajes(chat: Chat){
+        ModelTempMensaje.db.collection("chats").document(chat.idBD)
+            .collection("mensajes").get()
+            .addOnSuccessListener { documentos ->
+                for (documento in documentos){
+                    var mensaje = Mensaje(
+                        documento.id.toLongOrNull(),
+                        documento.get("contenido").toString(),
+                        documento.get("autor").toString(),
+                    )
+                    viewModel.addMensaje(mensaje)
+                }
+            }
     }
 }

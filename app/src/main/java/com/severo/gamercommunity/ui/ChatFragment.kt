@@ -47,7 +47,7 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.tvPerfilChat.text = util.getUserName()
         iniciaRecyclerView()
         iniciarChats()
         iniciarCRUD()

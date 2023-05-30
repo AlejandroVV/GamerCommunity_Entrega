@@ -162,7 +162,7 @@ class ArticuloFragment : Fragment() {
         ModelTempComentario.db.collection("articulos")
             .document(articulo.id.toString())
             .collection("comentarios").get()
-            .addOnSuccessListener {documentos ->
+            .addOnSuccessListener { documentos ->
                 for (documento in documentos){
                     var comentario = Comentario(
                         documento.id.toLongOrNull(),
@@ -170,7 +170,7 @@ class ArticuloFragment : Fragment() {
                         documento.get("usuario").toString(),
                         documento.get("email").toString()
                     )
-                    ModelTempComentario.addComentario(comentario)
+                    viewModel.addComentario(comentario)
                 }
             }
     }
