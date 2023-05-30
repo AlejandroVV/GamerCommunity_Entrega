@@ -26,7 +26,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btEnviar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btVolverChats" />
+        app:layout_constraintTop_toBottomOf="@+id/btVolverChats"
+        tools:listitem="@layout/item_mensaje" />
 
     <EditText
         android:id="@+id/etMensaje"
