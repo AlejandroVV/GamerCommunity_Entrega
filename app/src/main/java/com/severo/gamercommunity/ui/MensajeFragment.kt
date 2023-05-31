@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.DocumentChange
 import com.severo.gamercommunity.adapters.MensajeAdapter
 import com.severo.gamercommunity.databinding.FragmentMensajeBinding
 import com.severo.gamercommunity.model.Chat
@@ -44,7 +45,6 @@ class MensajeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var chat = args.chat!!
         (requireActivity() as AppCompatActivity).supportActionBar?.title = chat.titulo
-
         iniciaRecyclerView()
         ModelTempMensaje.limpiarReciclerView()
         iniciarMensajes(chat)
@@ -55,11 +55,30 @@ class MensajeFragment : Fragment() {
             val action = MensajeFragmentDirections.actionMensajeFragmentToChatFragment()
             findNavController().navigate(action)
         }
+        ModelTempMensaje.db.collection("chats").document(chat.idBD)
+            .collection("mensajes")
+            .addSnapshotListener { documentos, error ->
+                if(error != null){
+                    return@addSnapshotListener
+                }
+                for (documento in documentos!!.documentChanges){
+                    var mensaje = Mensaje(
+                        documento.document.id.toLongOrNull(),
+                        documento.document.get("contenido").toString(),
+                        documento.document.get("autor").toString(),
+                        documento.document.get("email").toString(),
+                    )
+                    when(documento.type){
+                        DocumentChange.Type.ADDED -> viewModel.addMensaje(mensaje)
+                        DocumentChange.Type.MODIFIED -> viewModel.addMensaje(mensaje)
+                        DocumentChange.Type.REMOVED -> viewModel.delMensaje(mensaje)
+                    }
+                }
+            }
         binding.btEnviar.setOnClickListener {
             if (binding.etMensaje.text.isNotEmpty()){
                 var contenido = binding.etMensaje.text.toString()
-                var autor = util.getUserName()
-                var mensaje = Mensaje(contenido, util.getUserName())
+                var mensaje = Mensaje(contenido, util.getUserName(), util.getEmail())
                 ModelTempMensaje.addBD(chat, mensaje)
                 viewModel.addMensaje(mensaje)
                 binding.etMensaje.setText("")
@@ -90,6 +109,7 @@ class MensajeFragment : Fragment() {
                         documento.id.toLongOrNull(),
                         documento.get("contenido").toString(),
                         documento.get("autor").toString(),
+                        documento.get("email").toString(),
                     )
                     viewModel.addMensaje(mensaje)
                 }

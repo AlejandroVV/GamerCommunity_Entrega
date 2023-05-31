@@ -78,9 +78,9 @@ class ArticuloFragment : Fragment() {
                         documento.document.get("email").toString(),
                     )
                     when(documento.type){
-                        DocumentChange.Type.ADDED -> ModelTempComentario.addComentario(comentario)
-                        DocumentChange.Type.MODIFIED -> ModelTempComentario.addComentario(comentario)
-                        DocumentChange.Type.REMOVED -> ModelTempComentario.delComentario(comentario)
+                        DocumentChange.Type.ADDED -> viewModel.addComentario(comentario)
+                        DocumentChange.Type.MODIFIED -> viewModel.addComentario(comentario)
+                        DocumentChange.Type.REMOVED -> viewModel.delComentario(comentario)
                     }
                 }
             }

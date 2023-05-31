@@ -32,8 +32,8 @@ class MensajeAdapter():RecyclerView.Adapter<MensajeAdapter.MensajeViewHolder>() 
                                   position: Int) {
         with(holder) {
             with(listaMensajes!![position]) {
-                var username = util.getUserName()
-                if(this.autor == username){
+                var email = util.getEmail()
+                if(this.email == email){
                     binding.tvAutorMensaje.text = "Tú"
                     binding.cvMensaje.setBackgroundResource(R.color.teal_200)
                 } else {

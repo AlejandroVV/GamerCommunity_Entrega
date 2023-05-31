@@ -8,12 +8,14 @@ import kotlinx.parcelize.Parcelize
 data class Mensaje(
     var id:Long?=null,
     val contenido:String,
-    val autor:String
+    val autor:String,
+    val email:String
 ):Parcelable {
 
     constructor(contenido:String,
-                autor:String
-    ):this(ModelTempMensaje.getId(), contenido, autor){}
+                autor:String,
+                email: String
+    ):this(ModelTempMensaje.getId(), contenido, autor, email){}
 
     override fun equals(other: Any?): Boolean {
         return (other is Mensaje)&&(this.id == other?.id)

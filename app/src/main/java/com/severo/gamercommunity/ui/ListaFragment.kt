@@ -132,7 +132,7 @@ class ListaFragment : Fragment() {
         ModelTempArticulo.db.collection("articulos").get()
             .addOnSuccessListener { documentos ->
                 for(documento in documentos){
-                    var articulo: Articulo = Articulo(
+                    var articulo = Articulo(
                         documento.id.toLongOrNull(),
                         documento.get("titulo").toString(),
                         documento.get("descripcion").toString(),

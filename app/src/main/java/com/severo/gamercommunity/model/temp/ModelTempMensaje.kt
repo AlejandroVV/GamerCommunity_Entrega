@@ -61,6 +61,7 @@ object ModelTempMensaje {
         var id = mensaje.id.toString()
         var contenido = mensaje.contenido
         var autor = mensaje.autor
+        var email = mensaje.email
 
         db.collection("chats").document(chat.idBD)
             .collection("mensajes").document(id)
@@ -69,6 +70,7 @@ object ModelTempMensaje {
                     "id" to id,
                     "contenido" to contenido,
                     "autor" to autor,
+                    "email" to email,
                 )
             )
     }
