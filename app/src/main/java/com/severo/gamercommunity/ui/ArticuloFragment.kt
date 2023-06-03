@@ -96,25 +96,35 @@ class ArticuloFragment : Fragment() {
     }
 
     private fun iniciaArticulo(articulo: Articulo) {
+        val key = util.getEmail()
+        val valoraciones = articulo.valoraciones
         binding.etTitulo.setText(articulo.titulo)
         binding.etAutor.setText("Escrito por ${articulo.usuario}")
         binding.etArticulo.setText(articulo.contenido)
-        binding.rbValoracion.rating = articulo.valoracion
+        if(valoraciones.containsKey(key)){
+            binding.rbValoracion.rating = valoraciones[key]!!
+        } else {
+            binding.rbValoracion.rating = 0F
+        }
 //cambiamos el título
         (requireActivity() as AppCompatActivity).supportActionBar?.title = "Artículo ${articulo.id}"
     }
 
     private fun guardarArticulo(articulo: Articulo) {
 //recuperamos los datos
+        val valoraciones = articulo.valoraciones
+        valoraciones.put(util.getEmail(), binding.rbValoracion.rating)
         var id = articulo.id
         val titulo = articulo.titulo
         val descripcion = articulo.descripcion
         val contenido = articulo.contenido
-        val valoracion=binding.rbValoracion.rating
+        val valoracion= util.getValoracionGlobal(valoraciones)
         val usuario= articulo.usuario
         val email = articulo.email
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email)
+        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email,
+                                valoraciones)
 
+        ModelTempArticulo.addBD(articulo)
         viewModel.addArticulo(articulo)
         findNavController().popBackStack()
     }

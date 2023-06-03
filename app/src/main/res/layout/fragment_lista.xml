@@ -21,9 +21,10 @@
         android:id="@+id/tvPerfilLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/rvArticulos"
         app:layout_constraintEnd_toStartOf="@+id/btChatLista"
         app:layout_constraintTop_toTopOf="parent" />
 

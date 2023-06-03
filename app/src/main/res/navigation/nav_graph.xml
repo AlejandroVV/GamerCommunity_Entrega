@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_listaFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_listaFragment_to_perfilFragment"
+            app:destination="@id/perfilFragment" />
     </fragment>
     <fragment
         android:id="@+id/articuloFragment"
@@ -97,5 +100,14 @@
         <action
             android:id="@+id/action_mensajeFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.severo.gamercommunity.ui.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" >
+        <action
+            android:id="@+id/action_perfilFragment_to_listaFragment"
+            app:destination="@id/listaFragment" />
     </fragment>
 </navigation>

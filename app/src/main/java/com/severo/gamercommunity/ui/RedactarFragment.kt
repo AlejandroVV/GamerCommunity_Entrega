@@ -42,7 +42,6 @@ class RedactarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvPerfilRedactar.text = util.getUserName()
         iniciaArticulo(args.articulo!!)
         binding.btGuardarRedactar.setOnClickListener {
             guardarArticulo(args.articulo!!)
@@ -67,7 +66,9 @@ class RedactarFragment : Fragment() {
         val usuario= util.getUserName()
         val valoracion = articulo.valoracion
         val email = articulo.email
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email)
+        val valoraciones = articulo.valoraciones
+        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email,
+                                valoraciones)
 
 //guardamos la tarea desde el viewmodel
         ModelTempArticulo.addBD(articulo)
@@ -75,16 +76,6 @@ class RedactarFragment : Fragment() {
 //salimos de editarFragment
         findNavController().popBackStack()
     }
-
-    /*private fun iniciaFabGuardar() {
-        binding.fabGuardar.setOnClickListener {
-            if (binding.etTecnico.text.toString().isNullOrEmpty() ||
-                binding.etDescripcion.text.toString().isNullOrEmpty())
-                muestraMensajeError()
-            else
-                guardaTarea()
-        }
-    }*/
     private fun muestraMensajeError() {
         Snackbar.make(binding.root, "Es necesario rellenar todos los campos", Snackbar.LENGTH_LONG)
             .setAction("Action", null).show()

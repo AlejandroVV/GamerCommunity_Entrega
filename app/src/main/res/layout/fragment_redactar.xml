@@ -5,7 +5,7 @@
     android:id="@+id/redactarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RedactarFragment" >
+    tools:context=".ui.RedactarFragment">
 
     <ImageButton
         android:id="@+id/btVolverRedactar"
@@ -15,16 +15,6 @@
         android:layout_marginEnd="10dp"
         android:src="@android:drawable/ic_menu_revert"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvPerfilRedactar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/btVolverRedactar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
@@ -96,7 +86,7 @@
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_save"
         app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-        app:layout_constraintEnd_toStartOf="@+id/tvPerfilRedactar"
+        app:layout_constraintEnd_toStartOf="@+id/btVolverRedactar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

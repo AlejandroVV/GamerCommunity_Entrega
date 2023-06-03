@@ -72,6 +72,7 @@ class ListaFragment : Fragment() {
                     documento.document.get("valoracion").toString().toFloat(),
                     documento.document.get("usuario").toString(),
                     documento.document.get("email").toString(),
+                    documento.document.get("valoraciones") as HashMap<String, Float>,
                 )
                 when(documento.type){
                     DocumentChange.Type.ADDED -> viewModel.addArticulo(articulo)
@@ -82,6 +83,10 @@ class ListaFragment : Fragment() {
         }
         binding.btChatLista.setOnClickListener {
             val action = ListaFragmentDirections.actionListaFragmentToChatFragment()
+            findNavController().navigate(action)
+        }
+        binding.tvPerfilLista.setOnClickListener {
+            val action = ListaFragmentDirections.actionListaFragmentToPerfilFragment()
             findNavController().navigate(action)
         }
     }
@@ -104,7 +109,9 @@ class ListaFragment : Fragment() {
 
     private fun iniciaCRUD(){
         binding.btNuevo.setOnClickListener {
-            val articulo = Articulo("","","", 0F, username, email)
+            var valoraciones = hashMapOf<String,Float>(util.getEmail() to 0F)
+            val articulo = Articulo("","","", 0F, username, email,
+                                    valoraciones)
             val action = ListaFragmentDirections.actionListaFragmentToRedactarFragment(articulo)
             findNavController().navigate(action)
         }
@@ -140,6 +147,7 @@ class ListaFragment : Fragment() {
                         documento.get("valoracion").toString().toFloat(),
                         documento.get("usuario").toString(),
                         documento.get("email").toString(),
+                        documento.get("valoraciones") as HashMap<String, Float>
                     )
                     viewModel.addArticulo(articulo)
                 }

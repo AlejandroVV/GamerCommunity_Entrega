@@ -76,14 +76,7 @@ object ModelTempArticulo {
         var valoracion = articulo.valoracion
         var usuario = articulo.usuario
         var email = articulo.email
-        var valoraciones = hashMapOf<String,Float>(usuario to valoracion)
-        val pos = articulos.indexOf(articulo)
-        if (pos > 0) {//si existe
-            db.collection("articulos").document(id.toString())
-                .get().addOnSuccessListener {
-                    valoraciones = it.get("valoraciones") as HashMap<String, Float>
-                }
-        }
+        var valoraciones = articulo.valoraciones
         db.collection("articulos").document(id.toString())
             .set(
                 hashMapOf(
