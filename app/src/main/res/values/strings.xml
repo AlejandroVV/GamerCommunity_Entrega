@@ -26,7 +26,7 @@
     <string name="bt_leer">Leer</string>
     <string name="bt_editar">Editar</string>
     <string name="tv_titulo">Título</string>
-    <string name="tv_descripcion">Añade una descripción (Opcional)</string>
+    <string name="tv_descripcion">Añade una descripción</string>
     <string name="tv_contenido">Contenido</string>
     <string name="tv_pwdemail">Inserta la contraseña del correo</string>
     <string name="bt_cambiar">Guardar</string>
