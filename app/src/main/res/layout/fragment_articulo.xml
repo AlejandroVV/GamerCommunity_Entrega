@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toStartOf="@+id/btChatArticulo"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +74,13 @@
                 android:id="@+id/tvValoracion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/tv_valoración"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <RatingBar
                 android:id="@+id/rbValoracion"
@@ -86,14 +94,23 @@
                 android:id="@+id/tvRedactarComentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/tv_redactar_comentario"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etRedactarComentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="@string/et_escribir"
                 android:inputType="textMultiLine" />
 
             <Button

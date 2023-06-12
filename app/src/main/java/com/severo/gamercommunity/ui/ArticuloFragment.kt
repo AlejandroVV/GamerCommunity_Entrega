@@ -88,6 +88,10 @@ class ArticuloFragment : Fragment() {
             val action = ArticuloFragmentDirections.actionArticuloFragmentToChatFragment()
             findNavController().navigate(action)
         }
+        binding.tvPerfilArticulo.setOnClickListener {
+            val action = ArticuloFragmentDirections.actionArticuloFragmentToPerfilFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

@@ -24,6 +24,8 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
         android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btVolverLista"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +47,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/tv_busqueda"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btVolverLista" />
 

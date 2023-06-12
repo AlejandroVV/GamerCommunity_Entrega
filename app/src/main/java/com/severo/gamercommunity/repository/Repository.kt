@@ -2,14 +2,8 @@ package com.severo.gamercommunity.repository
 
 import android.app.Application
 import android.content.Context
-import com.severo.gamercommunity.model.Articulo
-import com.severo.gamercommunity.model.Chat
-import com.severo.gamercommunity.model.Comentario
-import com.severo.gamercommunity.model.Mensaje
-import com.severo.gamercommunity.model.temp.ModelTempArticulo
-import com.severo.gamercommunity.model.temp.ModelTempChat
-import com.severo.gamercommunity.model.temp.ModelTempComentario
-import com.severo.gamercommunity.model.temp.ModelTempMensaje
+import com.severo.gamercommunity.model.*
+import com.severo.gamercommunity.model.temp.*
 
 object Repository {
     //instancia al modelo
@@ -17,6 +11,7 @@ object Repository {
     private lateinit var modelComentarios:ModelTempComentario
     private lateinit var modelChats:ModelTempChat
     private lateinit var modelMensajes:ModelTempMensaje
+    private lateinit var modelSeguidos:ModelTempSeguido
     //el context suele ser necesario para recuperar datos
     private lateinit var application: Application
     //inicio del objeto singleton
@@ -31,6 +26,8 @@ object Repository {
         modelChats=ModelTempChat
         ModelTempMensaje(application)
         modelMensajes=ModelTempMensaje
+        ModelTempSeguido(application)
+        modelSeguidos=ModelTempSeguido
     }
 
     fun addArticulo(articulo: Articulo)= modelArticulos.addArticulo(articulo)
@@ -45,4 +42,7 @@ object Repository {
     fun addMensaje(mensaje: Mensaje)= modelMensajes.addMensaje(mensaje)
     fun delMensaje(mensaje: Mensaje)= modelMensajes.delMensaje(mensaje)
     fun getAllMensajes()= modelMensajes.getAllMensajes()
+    fun addSeguido(seguido: Seguido)= modelSeguidos.addSeguido(seguido)
+    fun delSeguido(seguido: Seguido)= modelSeguidos.delSeguido(seguido)
+    fun getAllSeguidos()= modelSeguidos.getAllSeguidos()
 }

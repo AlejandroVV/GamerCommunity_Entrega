@@ -38,6 +38,7 @@ class MensajeAdapter():RecyclerView.Adapter<MensajeAdapter.MensajeViewHolder>() 
                     binding.cvMensaje.setBackgroundResource(R.color.teal_200)
                 } else {
                     binding.tvAutorMensaje.text = autor
+                    binding.cvMensaje.setBackgroundResource(R.color.white)
                 }
 
                 binding.tvContenidoMensaje.text = contenido

@@ -58,23 +58,23 @@ class RedactarFragment : Fragment() {
     }
 
     private fun guardarArticulo(articulo: Articulo) {
-//recuperamos los datos
         var id = articulo.id
         val titulo = binding.etTituloRedactar.text.toString()
         val descripcion = binding.etDescripcion.text.toString()
         val contenido = binding.etContenidoRedactar.text.toString()
-        val usuario= util.getUserName()
-        val valoracion = articulo.valoracion
-        val email = articulo.email
-        val valoraciones = articulo.valoraciones
-        val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email,
-                                valoraciones)
-
-//guardamos la tarea desde el viewmodel
-        ModelTempArticulo.addBD(articulo)
-        viewModel.addArticulo(articulo)
-//salimos de editarFragment
-        findNavController().popBackStack()
+        if(titulo.isNotEmpty() && descripcion.isNotEmpty() && contenido.isNotEmpty()){
+            val usuario= util.getUserName()
+            val valoracion = articulo.valoracion
+            val email = articulo.email
+            val valoraciones = articulo.valoraciones
+            val articulo = Articulo(id, titulo, descripcion, contenido, valoracion, usuario, email,
+                valoraciones)
+            ModelTempArticulo.addBD(articulo)
+            viewModel.addArticulo(articulo)
+            findNavController().popBackStack()
+        } else {
+            muestraMensajeError()
+        }
     }
     private fun muestraMensajeError() {
         Snackbar.make(binding.root, "Es necesario rellenar todos los campos", Snackbar.LENGTH_LONG)

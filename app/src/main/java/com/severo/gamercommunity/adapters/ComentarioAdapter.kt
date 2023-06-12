@@ -57,14 +57,16 @@ class ComentarioAdapter():RecyclerView.Adapter<ComentarioAdapter.ComentarioViewH
                 var usuario = comentario.usuario
                 var email = comentario.email
                 var editado = Comentario(id, contenido, usuario, email)
-                onComentarioClickListener?.onComentarioEditarClick(editado)
-                binding.btGuardarComentario.visibility = View.GONE
-                binding.btCancelarComentario.visibility = View.GONE
-                binding.etComentario.visibility = View.GONE
-                binding.tvComentario.visibility = View.VISIBLE
-                binding.tvComentario.text = contenido
-                binding.btEditarComentario.visibility = View.VISIBLE
-                binding.btBorrar.visibility = View.VISIBLE
+                if(contenido.isNotEmpty()){
+                    onComentarioClickListener?.onComentarioEditarClick(editado)
+                    binding.btGuardarComentario.visibility = View.GONE
+                    binding.btCancelarComentario.visibility = View.GONE
+                    binding.etComentario.visibility = View.GONE
+                    binding.tvComentario.visibility = View.VISIBLE
+                    binding.tvComentario.text = contenido
+                    binding.btEditarComentario.visibility = View.VISIBLE
+                    binding.btBorrar.visibility = View.VISIBLE
+                }
             }
         }
         }

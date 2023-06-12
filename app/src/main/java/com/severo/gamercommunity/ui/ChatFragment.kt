@@ -76,6 +76,10 @@ class ChatFragment : Fragment() {
             val action = ChatFragmentDirections.actionChatFragmentToListaFragment()
             findNavController().navigate(action)
         }
+        binding.tvPerfilChat.setOnClickListener {
+            val action = ChatFragmentDirections.actionChatFragmentToPerfilFragment()
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {
