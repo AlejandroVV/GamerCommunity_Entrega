@@ -110,8 +110,7 @@ class ArticuloFragment : Fragment() {
         } else {
             binding.rbValoracion.rating = 0F
         }
-//cambiamos el título
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Artículo ${articulo.id}"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = articulo.titulo
     }
 
     private fun guardarArticulo(articulo: Articulo) {

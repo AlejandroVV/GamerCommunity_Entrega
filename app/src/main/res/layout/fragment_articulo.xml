@@ -48,15 +48,23 @@
                 android:id="@+id/etTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 tools:text="Título" />
 
             <EditText
                 android:id="@+id/etAutor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textAlignment="center"
@@ -66,6 +74,8 @@
                 android:id="@+id/etArticulo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine" />
